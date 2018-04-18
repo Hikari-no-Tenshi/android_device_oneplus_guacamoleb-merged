@@ -10,9 +10,6 @@ BOARD_VENDOR := oneplus
 
 DEVICE_PATH := device/oneplus/guacamoleb
 
-# Assert
-TARGET_OTA_ASSERT_DEVICE := OnePlus7
-
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
