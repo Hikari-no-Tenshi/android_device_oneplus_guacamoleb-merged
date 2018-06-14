@@ -36,6 +36,10 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Spline;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 public class AutoHighBrightnessModeService extends Service {
     private static final String BRIGHTNESS_FILE =
             "/sys/class/backlight/panel0-backlight/brightness";
@@ -48,22 +52,27 @@ public class AutoHighBrightnessModeService extends Service {
     private boolean mAutoHBMSensorEnabled = false;
     private boolean mIsAutomaticBrightnessEnabled = false;
     private int mLightSensorRate = 0;
+    private ExecutorService mExecutorService;
 
     private float getHBMBrightness(float lux) {
         return mHBMLuxToBacklightSpline.interpolate(lux);
     }
 
     private void activateLightSensorRead() {
-        mSensorManager.registerListener(
-                mSensorEventListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
-                mLightSensorRate);
-        mAutoHBMSensorEnabled = true;
+        submit(() -> {
+            mSensorManager.registerListener(
+                    mSensorEventListener,
+                    mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+                    mLightSensorRate);
+            mAutoHBMSensorEnabled = true;
+        });
     }
 
     private void deactivateLightSensorRead() {
-        mSensorManager.unregisterListener(mSensorEventListener);
-        mAutoHBMSensorEnabled = false;
+        submit(() -> {
+            mSensorManager.unregisterListener(mSensorEventListener);
+            mAutoHBMSensorEnabled = false;
+        });
     }
 
     private final SensorEventListener mSensorEventListener = new SensorEventListener() {
@@ -103,6 +112,7 @@ public class AutoHighBrightnessModeService extends Service {
     public void onCreate() {
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mExecutorService = Executors.newSingleThreadExecutor();
         IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(mScreenStateReceiver, screenStateFilter);
@@ -115,6 +125,10 @@ public class AutoHighBrightnessModeService extends Service {
         mHBMLuxToBacklightSpline = Spline.createSpline(hbm_lux, hbm_brightness);
         mCustomSettingsObserver.observe();
         activateLightSensorRead();
+    }
+
+    private Future<?> submit(Runnable runnable) {
+        return mExecutorService.submit(runnable);
     }
 
     @Override
