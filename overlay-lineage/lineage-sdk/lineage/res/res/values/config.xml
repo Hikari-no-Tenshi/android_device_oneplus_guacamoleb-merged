@@ -101,4 +101,7 @@
         <item>org.lineageos.lineageparts.gestures.KeyHandler</item>
         <item>org.lineageos.device.DeviceSettings.KeyHandler</item>
     </string-array>
+
+    <!-- Whether device has a notch -->
+    <bool name="config_haveNotch">true</bool>
 </resources>
