@@ -131,6 +131,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.display.disable_inline_rotator=1 \
     vendor.display.disable_scaler=0 \
     vendor.display.enable_null_display=0 \
+    vendor.display.enable_optimize_refresh=1 \
     ro.sf.lcd_density=420 \
     vendor.display.disable_mask_layer_hint=1
 
