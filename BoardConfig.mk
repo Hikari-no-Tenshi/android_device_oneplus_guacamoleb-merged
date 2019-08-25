@@ -8,7 +8,7 @@ BUILD_BROKEN_DUP_RULES := true
 
 BOARD_VENDOR := oneplus
 
-DEVICE_PATH := device/oneplus/guacamole
+DEVICE_PATH := device/oneplus/guacamoleb
 
 # Architecture
 TARGET_ARCH := arm64
@@ -36,7 +36,7 @@ TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := OnePlus7Pro
+TARGET_OTA_ASSERT_DEVICE := OnePlus7
 
 # Kernel
 BOARD_KERNEL_BASE := 0x00000000

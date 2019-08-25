@@ -17,7 +17,7 @@
 
 set -e
 
-DEVICE=guacamole
+DEVICE=guacamoleb
 VENDOR=oneplus
 
 # Load extract_utils and do some sanity checks

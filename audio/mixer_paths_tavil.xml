@@ -635,7 +635,7 @@
     <ctl name="stereo Profile" value="speaker" />
     <!-- Ultrasound default settings-->
     <ctl name="Ultrasound Event" value="0" />
-    <ctl name="Ultrasound Mode" value="699" />
+    <ctl name="Ultrasound Mode" value="700" />
     <ctl name="Ultrasound Suspend" value="0" />
     <ctl name="Ultrasound Enable" value="Off" />
     <ctl name="Ultrasound Rx Port" value="Off" />
@@ -830,7 +830,6 @@
     <path name="low-latency-playback">
         <ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia5" value="1" />
     </path>
-
 <!-- #ifdef VENDOR_EDIT -->
 <!-- wangdongdong@MultiMediaService,2016/10/01,add i2s path-->
     <path name="low-latency-playback quat_i2s">
@@ -1064,14 +1063,12 @@
         <ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia4" value="1" />
     <!-- #endif -->
     </path>
-
 <!-- #ifdef VENDOR_EDIT -->
 <!-- wangdongdong@MultiMediaService,2016/10/01,add i2s path-->
     <path name="compress-offload-playback quat_i2s">
         <ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia4" value="1" />
     </path>
 <!--#endif-->
-
     <path name="compress-offload-playback speaker-protected">
         <path name="compress-offload-playback" />
     </path>
@@ -2594,12 +2591,12 @@
 <!--#ifdef VENDOR_EDIT
 //dujie@MM.Audio, 2019/05/21, add receiver-mmi mixer path -->
   <path name="receiver-mmi">
-     <ctl name="SLIM RX0 MUX" value="AIF1_PB" />
+     <!--ctl name="SLIM RX0 MUX" value="AIF1_PB" />
      <ctl name="CDC_IF RX0 MUX" value="SLIM RX0" />
      <ctl name="SLIM_0_RX Channels" value="One" />
      <ctl name="RX INT0_1 MIX1 INP0" value="RX0" />
      <ctl name="RX INT0 DEM MUX" value="CLSH_DSM_OUT" />
-     <ctl name="EAR SPKR PA Gain" value="G_6_DB" />
+     <ctl name="EAR SPKR PA Gain" value="G_6_DB" /-->
   </path>
 
   <path name="handset-mmi">
@@ -2698,7 +2695,7 @@
     </path>
 
     <path name="speaker-mic-liquid">
-        <path name="dmic3" />
+        <path name="dmic2" />
     </path>
 
     <path name="speaker-mic-sbc">
@@ -2764,7 +2761,7 @@
     <path name="handset">
         <ctl name="stereo Profile" value="receive" />
         <ctl name="TFA_CHIP_SELECTOR" value="3" />
-        <ctl name="Ultrasound Mode" value="693" />
+        <ctl name="Ultrasound Mode" value="701" />
         <!-- yewenliang@MM.Audio, 2019/07/23,add for set bob mode and voltage  -->
         <ctl name="Bob Regulator" value="Enable" />
     </path>
@@ -2772,7 +2769,7 @@
     <path name="ultrasound-reveier-mode">
         <ctl name="stereo Profile" value="receive" />
         <ctl name="TFA_CHIP_SELECTOR" value="3" />
-        <ctl name="Ultrasound Mode" value="693" />
+        <ctl name="Ultrasound Mode" value="701" />
     </path>
 <!-- #endif VENDOR_EDIT-->
 
@@ -2806,8 +2803,7 @@
     <path name="handset-mic-karaoke">
         <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
         <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX8" value="1" />
-        <ctl name="SLIM_0_TX Channels" value="Three" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
         <ctl name="CDC_IF TX5 MUX" value="DEC5" />
         <ctl name="ADC MUX5" value="AMIC" />
         <ctl name="AMIC MUX5" value="ADC4" />
@@ -2815,10 +2811,6 @@
         <ctl name="CDC_IF TX6 MUX" value="DEC6" />
         <ctl name="ADC MUX6" value="AMIC" />
         <ctl name="AMIC MUX6" value="ADC3" />
-        <ctl name="CDC_IF TX8 MUX" value="DEC8" />
-        <ctl name="ADC MUX8" value="AMIC" />
-        <ctl name="AMIC MUX8" value="ADC1" />
-        <ctl name="ADC1 Volume" value="6" />
         <ctl name="ADC3 Volume" value="6" />
         <ctl name="ADC4 Volume" value="6" />
     </path>
@@ -3016,6 +3008,10 @@
     <path name="headset-mic">
         <path name="amic2" />
         <ctl name="DEC0 Volume" value="84" />
+    <!-- #ifdef VENDOR_EDIT liuhaituo Reduce 3db(12->10) adc gain to solve the problem
+          of headset mode voip call tx topping-->
+        <ctl name="ADC2 Volume" value="10" />
+    <!-- #endif -->
     </path>
 
     <path name="headset-mic-liquid">
@@ -3386,50 +3382,9 @@
     </path>
 
     <path name="speaker-mic-wechat-front">
-        <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
-        <ctl name="SLIM_0_TX Channels" value="Three" />
-        <ctl name="CDC_IF TX6 MUX" value="DEC6" />
-        <ctl name="ADC MUX6" value="AMIC" />
-        <ctl name="AMIC MUX6" value="ADC3" />
-        <ctl name="CDC_IF TX5 MUX" value="DEC5" />
-        <ctl name="ADC MUX5" value="AMIC" />
-        <ctl name="AMIC MUX5" value="ADC4" />
-        <ctl name="AMIC4_5 SEL" value="AMIC4" />
-        <ctl name="CDC_IF TX7 MUX" value="DEC7" />
-        <ctl name="ADC MUX7" value="AMIC" />
-        <ctl name="AMIC MUX7" value="ADC1" />
-        <ctl name="ADC3 Volume" value="6" />
-        <ctl name="ADC4 Volume" value="6" />
-        <ctl name="ADC1 Volume" value="6" />
-    </path>
-
-    <path name="speaker-mic-wechat-back">
-        <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
-        <ctl name="SLIM_0_TX Channels" value="Three" />
-        <ctl name="CDC_IF TX6 MUX" value="DEC6" />
-        <ctl name="ADC MUX6" value="AMIC" />
-        <ctl name="AMIC MUX6" value="ADC3" />
-        <ctl name="CDC_IF TX5 MUX" value="DEC5" />
-        <ctl name="ADC MUX5" value="AMIC" />
-        <ctl name="AMIC MUX5" value="ADC4" />
-        <ctl name="AMIC4_5 SEL" value="AMIC4" />
-        <ctl name="CDC_IF TX7 MUX" value="DEC7" />
-        <ctl name="ADC MUX7" value="AMIC" />
-        <ctl name="AMIC MUX7" value="ADC1" />
-        <ctl name="ADC3 Volume" value="6" />
-        <ctl name="ADC4 Volume" value="6" />
-        <ctl name="ADC1 Volume" value="6" />
-    </path>
-
-    <path name="voice-speaker-voip-mic">
         <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
         <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX7" value="1" />
-        <ctl name="SLIM_0_TX Channels" value="Three" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
         <ctl name="CDC_IF TX5 MUX" value="DEC5" />
         <ctl name="ADC MUX5" value="AMIC" />
         <ctl name="AMIC MUX5" value="ADC3" />
@@ -3437,9 +3392,36 @@
         <ctl name="ADC MUX6" value="AMIC" />
         <ctl name="AMIC MUX6" value="ADC4" />
         <ctl name="AMIC4_5 SEL" value="AMIC4" />
-        <ctl name="CDC_IF TX7 MUX" value="DEC7" />
-        <ctl name="ADC MUX7" value="AMIC" />
-        <ctl name="AMIC MUX7" value="ADC1" />
+        <ctl name="ADC3 Volume" value="6" />
+        <ctl name="ADC4 Volume" value="6" />
+    </path>
+
+    <path name="speaker-mic-wechat-back">
+        <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
+        <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
+        <ctl name="CDC_IF TX5 MUX" value="DEC5" />
+        <ctl name="ADC MUX5" value="AMIC" />
+        <ctl name="AMIC MUX5" value="ADC3" />
+        <ctl name="CDC_IF TX6 MUX" value="DEC6" />
+        <ctl name="ADC MUX6" value="AMIC" />
+        <ctl name="AMIC MUX6" value="ADC4" />
+        <ctl name="AMIC4_5 SEL" value="AMIC4" />
+        <ctl name="ADC3 Volume" value="6" />
+        <ctl name="ADC4 Volume" value="6" />
+    </path>
+
+    <path name="voice-speaker-voip-mic">
+        <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
+        <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
+        <ctl name="CDC_IF TX5 MUX" value="DEC5" />
+        <ctl name="ADC MUX5" value="AMIC" />
+        <ctl name="AMIC MUX5" value="ADC3" />
+        <ctl name="CDC_IF TX6 MUX" value="DEC6" />
+        <ctl name="ADC MUX6" value="AMIC" />
+        <ctl name="AMIC MUX6" value="ADC4" />
+        <ctl name="AMIC4_5 SEL" value="AMIC4" />
     </path>
 <!-- lf end -->
 <!-- #endif VENDOR_EDIT-->
@@ -3517,8 +3499,7 @@
     <!-- #ifdef VENDOR_EDIT-->
         <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
         <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX8" value="1" />
-        <ctl name="SLIM_0_TX Channels" value="Three" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
         <ctl name="CDC_IF TX5 MUX" value="DEC5" />
         <ctl name="ADC MUX5" value="AMIC" />
         <ctl name="AMIC MUX5" value="ADC4" />
@@ -3526,9 +3507,6 @@
         <ctl name="CDC_IF TX6 MUX" value="DEC6" />
         <ctl name="ADC MUX6" value="AMIC" />
         <ctl name="AMIC MUX6" value="ADC3" />
-        <ctl name="CDC_IF TX8 MUX" value="DEC8" />
-        <ctl name="ADC MUX8" value="AMIC" />
-        <ctl name="AMIC MUX8" value="ADC1" />
     <!-- #endif VENDOR_EDIT-->
     </path>
 
@@ -3547,20 +3525,16 @@
 
     <path name="voice-speaker-dmic-ef">
     <!-- #ifdef VENDOR_EDIT-->
-        <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
         <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
-        <ctl name="AIF1_CAP Mixer SLIM TX8" value="1" />
-        <ctl name="SLIM_0_TX Channels" value="Three" />
-        <ctl name="CDC_IF TX6 MUX" value="DEC6" />
-        <ctl name="ADC MUX6" value="AMIC" />
-        <ctl name="AMIC MUX6" value="ADC3" />
+        <ctl name="AIF1_CAP Mixer SLIM TX6" value="1" />
+        <ctl name="SLIM_0_TX Channels" value="Two" />
         <ctl name="CDC_IF TX5 MUX" value="DEC5" />
         <ctl name="ADC MUX5" value="AMIC" />
-        <ctl name="AMIC MUX5" value="ADC4" />
+        <ctl name="AMIC MUX5" value="ADC3" />
+        <ctl name="CDC_IF TX6 MUX" value="DEC6" />
+        <ctl name="ADC MUX6" value="AMIC" />
+        <ctl name="AMIC MUX6" value="ADC4" />
         <ctl name="AMIC4_5 SEL" value="AMIC4" />
-        <ctl name="CDC_IF TX8 MUX" value="DEC8" />
-        <ctl name="ADC MUX8" value="AMIC" />
-        <ctl name="AMIC MUX8" value="ADC1" />
     <!-- #endif VENDOR_EDIT-->
     </path>
 
@@ -3850,10 +3824,6 @@
 
     <path name="unprocessed-mic">
         <path name="unprocessed-handset-mic" />
-<!-- ifdef VENDOR_EDIT -->
-        <ctl name="ADC4 Volume" value="6" />
-        <ctl name="DEC0 Volume" value="62" />
-<!-- endif -->
     </path>
 
     <path name="unprocessed-stereo-mic">
@@ -4463,7 +4433,7 @@
 
     <path name="ultrasound-calibration">
        <ctl name="Ultrasound Enable" value="On" />
-       <ctl name="Ultrasound Mode" value="698" />
+       <ctl name="Ultrasound Mode" value="702" />
        <ctl name="Ultrasound Debug Mode" value="1" />
        <ctl name="Ultrasound Log Level" value="7" />
     </path>

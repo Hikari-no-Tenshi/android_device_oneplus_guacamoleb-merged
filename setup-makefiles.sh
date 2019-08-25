@@ -18,7 +18,7 @@
 set -e
 
 # Required!
-DEVICE=guacamole
+DEVICE=guacamoleb
 VENDOR=oneplus
 
 INITIAL_COPYRIGHT_YEAR=2019
