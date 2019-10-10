@@ -41,15 +41,40 @@
 using android::base::GetProperty;
 using android::base::SetProperty;
 
-void property_override(char const prop[], char const value[])
+std::vector<std::string> ro_props_default_source_order = {
+    "",
+    "odm.",
+    "vendor.",
+    "product.",
+    "system_ext.",
+    "system.",
+};
+
+void property_override(char const prop[], char const value[], bool add = true)
 {
-    prop_info *pi;
-    pi = (prop_info*) __system_property_find(prop);
-    if (pi)
+    auto pi = (prop_info *) __system_property_find(prop);
+
+    if (pi != nullptr) {
         __system_property_update(pi, value, strlen(value));
-    else
+    } else if (add) {
         __system_property_add(prop, strlen(prop), value, strlen(value));
+    }
 }
+
+void set_ro_build_prop(const std::string &prop, const std::string &value) {
+    for (const auto &source : ro_props_default_source_order) {
+        auto prop_name = "ro." + source + "build." + prop;
+        property_override(prop_name.c_str(), value.c_str(), false);
+    }
+}
+
+void set_ro_product_prop(const std::string &prop, const std::string &value) {
+    for (const auto &source : ro_props_default_source_order) {
+        auto prop_name = "ro.product." + source + prop;
+        property_override(prop_name.c_str(), value.c_str(), false);
+    }
+}
+
 void property_override_dual(char const system_prop[],
     char const vendor_prop[], char const value[])
 {
@@ -97,12 +122,8 @@ void vendor_load_properties()
     std::string build_type;
     build_type = GetProperty("ro.build.type", "");
     if (build_type == "userdebug") {
-        property_override_dual("ro.build.type", "ro.vendor.build.type", "user");
-        property_override_dual("ro.odm.build.type", "ro.product.build.type", "user");
-        property_override_dual("ro.system.build.type", "ro.system_ext.build.type", "user");
-        property_override_dual("ro.build.tags", "ro.vendor.build.tags", "release-keys");
-        property_override_dual("ro.odm.build.tags", "ro.product.build.tags", "release-keys");
-        property_override_dual("ro.system.build.tags", "ro.system_ext.build.tags", "release-keys");
+        set_ro_build_prop("type", "user");
+        set_ro_build_prop("tags", "release-keys");
     }
 
     property_override_dual("ro.boot.vbmeta.device_state", "vendor.boot.vbmeta.device_state", "locked");
@@ -119,47 +140,49 @@ void vendor_load_properties()
     switch (rf_version){
       case 1:
         /* China*/
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1900");
-        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1900");
-        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1900");
+        set_ro_product_prop("model", "GM1900");
         property_override("ro.rf_version", "TDD_FDD_Ch_All");
         property_override("ro.build.display.id", "GM1900_14_220617");
+        set_ro_build_prop("id", "RKQ1.201022.002");
+        set_ro_build_prop("version.incremental", "2206171327");
         property_override("ro.build.id.hardware", "GM1900_14_");
         break;
       case 3:
         /* India*/
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1901");
-        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1901");
-        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1901");
+        set_ro_product_prop("model", "GM1901");
         property_override("ro.rf_version", "TDD_FDD_In_All");
         property_override("ro.build.display.id", "GM1901_14_220617");
+        set_ro_build_prop("id", "RKQ1.201022.002");
+        set_ro_build_prop("version.incremental", "2206171327");
         property_override("ro.build.id.hardware", "GM1901_14_");
         break;
       case 4:
         /* Europe */
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1903");
-        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1903");
-        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1903");
+        set_ro_product_prop("model", "GM1903");
+        set_ro_product_prop("name", "OnePlus7_EEA");
         property_override("ro.rf_version", "TDD_FDD_Eu_All");
         property_override("ro.build.display.id", "GM1903_14_220617");
+        set_ro_build_prop("fingerprint", "OnePlus/OnePlus7_EEA/OnePlus7:11/RKQ1.201022.002/2206171325:user/release-keys");
+        set_ro_build_prop("id", "RKQ1.201022.002");
+        set_ro_build_prop("version.incremental", "2206171325");
         property_override("ro.build.id.hardware", "GM1903_14_");
         break;
       case 5:
         /* Global / US Unlocked */
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1905");
-        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1905");
-        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1905");
+        set_ro_product_prop("model", "GM1905");
         property_override("ro.rf_version", "TDD_FDD_Am_All");
         property_override("ro.build.display.id", "GM1905_14_220617");
+        set_ro_build_prop("id", "RKQ1.201022.002");
+        set_ro_build_prop("version.incremental", "2206171327");
         property_override("ro.build.id.hardware", "GM1905_14_");
         break;
       default:
         /* Generic */
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1905");
-        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1905");
-        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1905");
+        set_ro_product_prop("model", "GM1905");
         property_override("ro.rf_version", "TDD_FDD_Am_All");
         property_override("ro.build.display.id", "GM1905_14_220617");
+        set_ro_build_prop("id", "RKQ1.201022.002");
+        set_ro_build_prop("version.incremental", "2206171327");
         property_override("ro.build.id.hardware", "GM1905_14_");
         break;
     }
