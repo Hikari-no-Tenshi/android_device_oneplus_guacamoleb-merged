@@ -1,7 +1,6 @@
 # Binaries
 /system/bin/dashd                                   u:object_r:dashd_exec:s0
 /(vendor|system/vendor)/bin/tri-state-key_daemon    u:object_r:tri-state-key_daemon_exec:s0
-/(vendor|system/vendor)/bin/tri-state-key-calibrate_daemon u:object_r:tri-state-key-calibrate_daemon_exec:s0
 /(vendor|system/vendor)/bin/vl53l1_daemon_main      u:object_r:vl53l1_daemon_main_exec:s0
 /(vendor|system/vendor)/bin/wifi-mac-generator      u:object_r:wifi-mac-generator_exec:s0
 
@@ -62,11 +61,11 @@
 /dev/socket/vl53l1_daemon    u:object_r:vl53l1_socket:s0
 
 # Sys files
+/sys/bus/platform/devices/soc/soc:tri_state_key/hall_data_calib    u:object_r:sysfs_tri_state_key:s0
 /sys/devices/platform/soc/soc:fingerprint_detect/sensor_version    u:object_r:sysfs_fpc:s0
+/sys/devices/platform/soc/soc:tri_state_key/hall_data_calib        u:object_r:sysfs_tri_state_key:s0
 /sys/devices/platform/vendor/vendor:motor_pl(/.*)?                 u:object_r:sysfs_motor:s0
 /sys/elliptic/engine/calibration_v2                                u:object_r:sysfs_audio:s0
 /sys/module/fsc(/.*)?                                              u:object_r:sysfs_fsc:s0
 /sys/module/stmvl53l1(/.*)?                                        u:object_r:sysfs_vl53l1:s0
 /sys/project_info(/.*)?                                            u:object_r:sysfs_project_info:s0
-/sys/bus/platform/devices/soc/soc:tri_state_key/hall_data_calib    u:object_r:sysfs_tri_state_key:s0
-/sys/devices/platform/soc/soc:tri_state_key/hall_data_calib        u:object_r:sysfs_tri_state_key:s0
