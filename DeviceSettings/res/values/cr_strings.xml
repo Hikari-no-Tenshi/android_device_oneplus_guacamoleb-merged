@@ -57,4 +57,8 @@
     <string name="vib_call_strength_summary_head">Define the strength of the vibrator during an incoming call</string>
     <string name="vib_notif_strength_title_head">Notification Strength</string>
     <string name="vib_notif_strength_summary_head">Define the strength of the vibrator during an incoming notification</string>
+
+    <string name="fps_title">FPS display</string>
+    <string name="fps_info_title">FPS overlay</string>
+    <string name="fps_info_summary">Show overlay with with current frames per second</string>
 </resources>

@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -31,6 +32,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.util.Log;
 import androidx.preference.PreferenceFragment;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -51,6 +53,8 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_NIGHT_SWITCH = "night";
     public static final String KEY_WIDECOLOR_SWITCH = "widecolor";
 
+    public static final String KEY_FPS_INFO = "fps_info";
+
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
 
     private static TwoStatePreference mHBMModeSwitch;
@@ -59,11 +63,14 @@ public class DeviceSettings extends PreferenceFragment
     private ListPreference mMiddleKeyPref;
     private ListPreference mBottomKeyPref;
     private VibratorStrengthPreference mVibratorStrength;
+    private static SwitchPreference mFpsInfo;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.main);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
 
         mVibratorStrength = (VibratorStrengthPreference) findPreference(KEY_VIBSTRENGTH);
         if (mVibratorStrength != null) {
@@ -89,11 +96,26 @@ public class DeviceSettings extends PreferenceFragment
         mDCModeSwitch.setEnabled(DCModeSwitch.isSupported());
         mDCModeSwitch.setChecked(DCModeSwitch.isCurrentlyEnabled(this.getContext()));
         mDCModeSwitch.setOnPreferenceChangeListener(new DCModeSwitch());
+
+        mFpsInfo = (SwitchPreference) findPreference(KEY_FPS_INFO);
+        mFpsInfo.setChecked(prefs.getBoolean(KEY_FPS_INFO, false));
+        mFpsInfo.setOnPreferenceChangeListener(this);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        Constants.setPreferenceInt(getContext(), preference.getKey(), Integer.parseInt((String) newValue));
+        if (preference == mFpsInfo) {
+            boolean enabled = (Boolean) newValue;
+            Intent fpsinfo = new Intent(this.getContext(), org.lineageos.device.DeviceSettings.FPSInfoService.class);
+            if (enabled) {
+                this.getContext().startService(fpsinfo);
+            } else {
+                this.getContext().stopService(fpsinfo);
+            }
+        } else {
+            Constants.setPreferenceInt(getContext(), preference.getKey(), Integer.parseInt((String) newValue));
+        }
+
         return true;
     }
 
