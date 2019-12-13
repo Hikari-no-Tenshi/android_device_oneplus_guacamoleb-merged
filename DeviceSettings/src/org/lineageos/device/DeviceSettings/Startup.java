@@ -35,17 +35,30 @@ public class Startup extends BroadcastReceiver {
         boolean enabled = false;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
+
+        if (enabled) {
         restore(SRGBModeSwitch.getFile(), enabled);
+		}
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HBM_SWITCH, false);
+        if (enabled) {
         restore(HBMModeSwitch.getFile(), enabled);
+        }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DC_SWITCH, false);
+        if (enabled) {
         restore(DCModeSwitch.getFile(), enabled);
+        }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
+        if (enabled) {
         restore(DCIModeSwitch.getFile(), enabled);
+        }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
+        if (enabled) {
         restore(NightModeSwitch.getFile(), enabled);
+        }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_WIDECOLOR_SWITCH, false);
+        if (enabled) {
         restore(WideColorModeSwitch.getFile(), enabled);
+        }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_FPS_INFO, false);
         if (enabled) {
             context.startService(new Intent(context, FPSInfoService.class));
