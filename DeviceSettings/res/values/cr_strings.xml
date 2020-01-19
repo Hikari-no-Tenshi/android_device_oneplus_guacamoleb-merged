@@ -62,4 +62,8 @@
     <string name="fps_title">FPS display</string>
     <string name="fps_info_title">FPS overlay</string>
     <string name="fps_info_summary">Show overlay with with current frames per second</string>
+
+    <string name="doze_category_title">Ambient display</string>
+    <string name="single_tap_gesture_title">Single-tap</string>
+    <string name="single_tap_gesture_summary">Pulse notifications and allow fingerprint unlock on tap</string>
 </resources>

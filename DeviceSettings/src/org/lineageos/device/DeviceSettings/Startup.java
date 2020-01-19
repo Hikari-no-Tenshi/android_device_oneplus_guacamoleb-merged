@@ -63,6 +63,10 @@ public class Startup extends BroadcastReceiver {
         if (enabled) {
             context.startService(new Intent(context, FPSInfoService.class));
         }
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_GESTURE_SINGLE_TAP_SWITCH, false);
+        if (enabled) {
+        restore(SingleTapSwitch.getFile(), enabled);
+        }
     }
 
     private void restore(String file, boolean enabled) {

@@ -52,6 +52,7 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_DCI_SWITCH = "dci";
     public static final String KEY_NIGHT_SWITCH = "night";
     public static final String KEY_WIDECOLOR_SWITCH = "widecolor";
+    public static final String KEY_GESTURE_SINGLE_TAP_SWITCH = "gesture_single_tap";
 
     public static final String KEY_FPS_INFO = "fps_info";
 
@@ -59,6 +60,7 @@ public class DeviceSettings extends PreferenceFragment
 
     private static TwoStatePreference mHBMModeSwitch;
     private static TwoStatePreference mDCModeSwitch;
+    private static TwoStatePreference mSingleTapSwitch;
     private ListPreference mTopKeyPref;
     private ListPreference mMiddleKeyPref;
     private ListPreference mBottomKeyPref;
@@ -100,6 +102,11 @@ public class DeviceSettings extends PreferenceFragment
         mFpsInfo = (SwitchPreference) findPreference(KEY_FPS_INFO);
         mFpsInfo.setChecked(prefs.getBoolean(KEY_FPS_INFO, false));
         mFpsInfo.setOnPreferenceChangeListener(this);
+
+        mSingleTapSwitch = (TwoStatePreference) findPreference(KEY_GESTURE_SINGLE_TAP_SWITCH);
+        mSingleTapSwitch.setEnabled(SingleTapSwitch.isSupported());
+        mSingleTapSwitch.setChecked(SingleTapSwitch.isCurrentlyEnabled(this.getContext()));
+        mSingleTapSwitch.setOnPreferenceChangeListener(new SingleTapSwitch());
     }
 
     @Override
