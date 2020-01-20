@@ -3,11 +3,13 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
+
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/oneplus/sm8150-common/sm8150-common-vendor.mk)
+$(call inherit-product, vendor/oneplus/guacamole/guacamole-vendor.mk)
 
 # Vendor properties
 -include $(LOCAL_PATH)/vendor_props.mk
@@ -23,8 +25,7 @@ DEVICE_PACKAGE_OVERLAYS += \
 
 PRODUCT_ENFORCE_RRO_TARGETS := *
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += \
-    $(LOCAL_PATH)/overlay-lineage/lineage-sdk \
-    $(LOCAL_PATH)/overlay-lineage/packages/apps/Snap
+    $(LOCAL_PATH)/overlay-lineage/lineage-sdk
 
 # A/B
 AB_OTA_UPDATER := true
@@ -133,6 +134,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_tuning_mixer_tavil.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer_tavil.txt \
     $(LOCAL_PATH)/audio/graphite_ipc_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/graphite_ipc_platform_info.xml \
     $(LOCAL_PATH)/audio/listen_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/listen_platform_info.xml \
+    $(LOCAL_PATH)/audio/mixer_paths_11811.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_11811.xml \
+    $(LOCAL_PATH)/audio/mixer_paths_pahu.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_pahu.xml \
+    $(LOCAL_PATH)/audio/mixer_paths_tavil.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_tavil.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9340.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths_wcd9340.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths_wcd9340_qrd.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths_wcd9340_qrd.xml \
@@ -170,7 +174,10 @@ PRODUCT_PACKAGES += \
     libxml2 \
     Snap \
     vendor.oneplus.camera.CameraHIDL@1.0.vendor \
-    vendor.qti.hardware.camera.device@1.0.vendor
+    vendor.lineage.camera.motor@1.0 \
+    vendor.lineage.camera.motor@1.0-service.oneplus_msmnile \
+    vendor.qti.hardware.camera.device@1.0.vendor \
+    OnePlusCameraHelper
 
 # CNE
 PRODUCT_PACKAGES += \
@@ -178,12 +185,18 @@ PRODUCT_PACKAGES += \
     com.quicinc.cne \
     services-ext
 
-# Common init scripts
+# Cryptfshw
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.cryptfshw@1.0.vendor
+
+# Device init scripts
 PRODUCT_PACKAGES += \
     coredump.sh \
+    fstab.qcom \
     ftm_power_config.sh \
     init.class_main.sh \
     init.crda.sh \
+    init.display.guacamole.rc \
     init.mdm.sh \
     init.msm.usb.configfs.rc \
     init.oem.debug.rc \
@@ -210,10 +223,6 @@ PRODUCT_PACKAGES += \
     ueventd.rc \
     vendor.oem_ftm.rc \
     vendor.oem_ftm_svc_disable.rc
-
-# Cryptfshw
-PRODUCT_PACKAGES += \
-    vendor.qti.hardware.cryptfshw@1.0.vendor
 
 # Display
 PRODUCT_PACKAGES += \
