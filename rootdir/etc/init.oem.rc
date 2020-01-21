@@ -585,7 +585,6 @@ on post-fs
     chmod 666 /sys/devices/platform/vendor/vendor\:infrared_pl/infrared_shut_down_state
     chmod 666 /sys/devices/platform/vendor/vendor\:infrared_pl/infrared_shut_down_state2
 
-    chown system system /sys/bus/platform/devices/soc/soc\:tri_state_key/hall_data_calib
     restorecon /sys/class/leds/vibrator/activate
     restorecon /sys/class/leds/vibrator/brightness
     restorecon /sys/class/leds/vibrator/duration
