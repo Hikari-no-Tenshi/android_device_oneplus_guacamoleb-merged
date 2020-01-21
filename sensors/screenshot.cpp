@@ -21,7 +21,7 @@ void update_screen_buffer(void **out) {
         // Update Screenshot at most every second
         ScreenshotClient::capture(SurfaceComposerClient::getInternalDisplayToken(),
                                     ui::Dataspace::V0_SRGB, ui::PixelFormat::RGBA_8888,
-                                    Rect(1000, 260, 1000 + 10, 260 + 10),
+                                    Rect(645, 205, 645 + 10, 205 + 10),
                                     10, 10, true, 0, &screen_buffer);
         last_screen_update = now.tv_sec;
     }
