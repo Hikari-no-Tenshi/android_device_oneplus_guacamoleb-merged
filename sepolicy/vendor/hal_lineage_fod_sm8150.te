@@ -25,3 +25,7 @@ allow hal_lineage_fod_sm8150 sysfs_fod:file rw_file_perms;
 # Allow hal_lineage_fod_sm8150 to read and write to sysfs_fod
 allow hal_lineage_fod_sm8150 sysfs_dm:file rw_file_perms;
 
+# Allow hal_lineage_fod_sm8150 to read sysfs_graphics
+allow hal_lineage_fod_sm8150 sysfs_graphics:dir search;
+allow hal_lineage_fod_sm8150 sysfs_graphics:file r_file_perms;
+

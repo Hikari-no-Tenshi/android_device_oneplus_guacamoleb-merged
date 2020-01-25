@@ -20,6 +20,8 @@
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
 #include <fstream>
+#include <vector>
+#include <stdlib.h>
 
 #define FINGERPRINT_ACQUIRED_VENDOR 6
 #define FINGERPRINT_ERROR_VENDOR 8
@@ -34,8 +36,8 @@
 #define OP_DISPLAY_SET_DIM 10
 
 // This is not a typo by me. It's by OnePlus.
+#define BRIGHTNESS_PATH "/sys/class/backlight/panel0-backlight/brightness"
 #define HBM_ENABLE_PATH "/sys/class/drm/card0-DSI-1/op_friginer_print_hbm"
-#define DIM_AMOUNT_PATH "/sys/class/drm/card0-DSI-1/fod_dim_alpha"
 #define HBM_PATH "/sys/class/drm/card0-DSI-1/hbm"
 
 namespace vendor {
@@ -45,6 +47,30 @@ namespace fingerprint {
 namespace inscreen {
 namespace V1_0 {
 namespace implementation {
+
+const std::vector<std::vector<int>> BRIGHTNESS_ALPHA_ARRAY = {
+    std::vector<int>{0, 255},
+    std::vector<int>{1, 241},
+    std::vector<int>{2, 240},
+    std::vector<int>{4, 238},
+    std::vector<int>{5, 236},
+    std::vector<int>{6, 235},
+    std::vector<int>{10, 231},
+    std::vector<int>{20, 223},
+    std::vector<int>{30, 216},
+    std::vector<int>{45, 208},
+    std::vector<int>{70, 197},
+    std::vector<int>{100, 185},
+    std::vector<int>{150, 175},
+    std::vector<int>{227, 153},
+    std::vector<int>{300, 136},
+    std::vector<int>{400, 118},
+    std::vector<int>{500, 102},
+    std::vector<int>{600, 89},
+    std::vector<int>{800, 66},
+    std::vector<int>{1023, 42},
+    std::vector<int>{2000, 131}
+};
 
 /*
  * Write value to path and close file.
@@ -83,19 +109,22 @@ Return<void> FingerprintInscreen::onFinishEnroll() {
     return Void();
 }
 
+Return<void> FingerprintInscreen::switchHbm(bool enabled) {
+    if (enabled) {
+        set(HBM_ENABLE_PATH, 1);
+    } else {
+        set(HBM_ENABLE_PATH, 0);
+    }
+    return Void();
+}
+
 Return<void> FingerprintInscreen::onPress() {
-    this->mVendorDisplayService->setMode(OP_DISPLAY_AOD_MODE, 2);
-    this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
-    set(HBM_ENABLE_PATH, 1);
     this->mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 1);
 
     return Void();
 }
 
 Return<void> FingerprintInscreen::onRelease() {
-    this->mVendorDisplayService->setMode(OP_DISPLAY_AOD_MODE, 0);
-    this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
-    set(HBM_ENABLE_PATH, 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 0);
 
     return Void();
@@ -103,6 +132,8 @@ Return<void> FingerprintInscreen::onRelease() {
 
 Return<void> FingerprintInscreen::onShowFODView() {
     this->mFodCircleVisible = true;
+    this->mVendorDisplayService->setMode(OP_DISPLAY_AOD_MODE, 2);
+    this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
 
     return Void();
 }
@@ -155,8 +186,39 @@ Return<void> FingerprintInscreen::setLongPressEnabled(bool enabled) {
     return Void();
 }
 
+static int interpolate(int x, int xa, int xb, int ya, int yb) {
+    int sub = 0;
+    int bf = (((yb - ya) * 2) * (x - xa)) / (xb - xa);
+    int factor = bf / 2;
+    int plus = bf % 2;
+    if (!(xa - xb == 0 || yb - ya == 0)) {
+        sub = (((2 * (x - xa)) * (x - xb)) / (yb - ya)) / (xa - xb);
+    }
+    return ya + factor + plus + sub;
+}
+
+int getDimAlpha(int brightness) {
+    int level = BRIGHTNESS_ALPHA_ARRAY.size();
+    int i = 0;
+    while (i < level && BRIGHTNESS_ALPHA_ARRAY[i][0] < brightness) {
+        i++;
+    }
+    if (i == 0) {
+        return BRIGHTNESS_ALPHA_ARRAY[0][1];
+    }
+    if (i == level) {
+        return BRIGHTNESS_ALPHA_ARRAY[level - 1][1];
+    }
+    return interpolate(brightness,
+            BRIGHTNESS_ALPHA_ARRAY[i-1][0],
+            BRIGHTNESS_ALPHA_ARRAY[i][0],
+            BRIGHTNESS_ALPHA_ARRAY[i-1][1],
+            BRIGHTNESS_ALPHA_ARRAY[i][1]);
+}
+
 Return<int32_t> FingerprintInscreen::getDimAmount(int32_t) {
-    int dimAmount = get(DIM_AMOUNT_PATH, 0);
+    int brightness = get(BRIGHTNESS_PATH, 0);
+    int dimAmount = getDimAlpha(brightness);
     int hbmMode = get(HBM_PATH, 0);
     if (hbmMode == 5) {
         dimAmount = 42;
