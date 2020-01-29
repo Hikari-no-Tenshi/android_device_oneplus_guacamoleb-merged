@@ -1,0 +1,6 @@
+# Binaries
+/(vendor|system/vendor)/bin/tri-state-key-calibrate_daemon u:object_r:tri-state-key-calibrate_daemon_exec:s0
+
+# Sys files
+/sys/bus/platform/devices/soc/soc:tri_state_key/hall_data_calib    u:object_r:sysfs_tri_state_key:s0
+/sys/devices/platform/soc/soc:tri_state_key/hall_data_calib        u:object_r:sysfs_tri_state_key:s0

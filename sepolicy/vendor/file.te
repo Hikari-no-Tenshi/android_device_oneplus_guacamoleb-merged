@@ -1,0 +1,2 @@
+# sysfs
+type sysfs_tri_state_key, sysfs_type, fs_type;
