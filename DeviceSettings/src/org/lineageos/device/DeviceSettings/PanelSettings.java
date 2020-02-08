@@ -45,7 +45,6 @@ import android.util.Log;
 
 public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCheckedChangeListener {
     private RadioGroup mRadioGroup;
-    private int mCurrentMode;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -59,7 +58,6 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
         } else if (WideColorModeSwitch.isCurrentlyEnabled(getContext())) {
             checkedButtonId = R.id.wide_color_mode;
         }
-        mCurrentMode = checkedButtonId;
         mRadioGroup.check(checkedButtonId);
         mRadioGroup.setOnCheckedChangeListener(this);
     }
@@ -74,41 +72,39 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
         return inflater.inflate(R.layout.panel_modes, container, false);
     }
 
-    private void disableCurrenMode() {
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor edit = sharedPrefs.edit();
-        if (mCurrentMode == R.id.srgb_mode) {
-            Utils.writeValue(SRGBModeSwitch.getFile(), "0");
-            edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
-        } else if (mCurrentMode == R.id.dci_mode) {
-            Utils.writeValue(DCIModeSwitch.getFile(), "0");
-            edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
-        } else if (mCurrentMode == R.id.wide_color_mode) {
-            Utils.writeValue(WideColorModeSwitch.getFile(), "0");
-            edit.putBoolean(DeviceSettings.KEY_WIDECOLOR_SWITCH, false);
-        }
-    }
-
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor edit = sharedPrefs.edit();
         if (checkedId == R.id.srgb_mode) {
-            disableCurrenMode();
             Utils.writeValue(SRGBModeSwitch.getFile(), "1");
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, true);
+            Utils.writeValue(DCIModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
+            Utils.writeValue(WideColorModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_WIDECOLOR_SWITCH, false);
         } else if (checkedId == R.id.dci_mode) {
-            disableCurrenMode();
             Utils.writeValue(DCIModeSwitch.getFile(), "1");
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, true);
+            Utils.writeValue(SRGBModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
+            Utils.writeValue(WideColorModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_WIDECOLOR_SWITCH, false);
         } else if (checkedId == R.id.off_mode) {
-            disableCurrenMode();
+            Utils.writeValue(SRGBModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
+            Utils.writeValue(DCIModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
+            Utils.writeValue(WideColorModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_WIDECOLOR_SWITCH, false);
         } else if (checkedId == R.id.wide_color_mode) {
-            disableCurrenMode();
             Utils.writeValue(WideColorModeSwitch.getFile(), "1");
             edit.putBoolean(DeviceSettings.KEY_WIDECOLOR_SWITCH, true);
+            Utils.writeValue(DCIModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
+            Utils.writeValue(SRGBModeSwitch.getFile(), "0");
+            edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
         }
         edit.commit();
-        mCurrentMode = checkedId;
     }
 }
