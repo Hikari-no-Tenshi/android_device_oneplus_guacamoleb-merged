@@ -26,6 +26,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     fstab.qcom
 
+# NoCutout
+PRODUCT_PACKAGES += \
+    NoCutoutOverlay
+
 # tri-state key
 PRODUCT_PACKAGES += \
     tri-state-key-calibrate_daemon
