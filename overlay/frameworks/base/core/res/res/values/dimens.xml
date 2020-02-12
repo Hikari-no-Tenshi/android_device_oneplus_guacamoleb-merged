@@ -21,7 +21,7 @@
 
     <!-- Height of the status bar -->
     <dimen name="status_bar_height_portrait">80.0px</dimen>
-    <dimen name="status_bar_height_landscape">80.0px</dimen>
+    <dimen name="status_bar_height_landscape">24.0dip</dimen>
 
 </resources>
 
