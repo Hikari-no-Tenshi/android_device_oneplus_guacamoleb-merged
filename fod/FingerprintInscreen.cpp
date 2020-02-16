@@ -36,6 +36,7 @@
 // This is not a typo by me. It's by OnePlus.
 #define HBM_ENABLE_PATH "/sys/class/drm/card0-DSI-1/op_friginer_print_hbm"
 #define DIM_AMOUNT_PATH "/sys/class/drm/card0-DSI-1/dim_alpha"
+#define DC_DIMMING_PATH "/sys/class/drm/card0-DSI-1/dimlayer_bl_en"
 
 namespace vendor {
 namespace lineage {
@@ -44,6 +45,8 @@ namespace fingerprint {
 namespace inscreen {
 namespace V1_0 {
 namespace implementation {
+
+int dc_dimming;
 
 /*
  * Write value to path and close file.
@@ -102,11 +105,16 @@ Return<void> FingerprintInscreen::onRelease() {
 
 Return<void> FingerprintInscreen::onShowFODView() {
     this->mFodCircleVisible = true;
+    dc_dimming = get(DC_DIMMING_PATH, 0);
+    set(DC_DIMMING_PATH, 0);
 
     return Void();
 }
 
 Return<void> FingerprintInscreen::onHideFODView() {
+    if (mFodCircleVisible) {
+        set(DC_DIMMING_PATH, dc_dimming);
+    }
     this->mFodCircleVisible = false;
     this->mVendorDisplayService->setMode(OP_DISPLAY_AOD_MODE, 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
