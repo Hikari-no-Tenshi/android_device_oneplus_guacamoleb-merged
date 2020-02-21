@@ -23,9 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -35,7 +32,6 @@ import android.media.AudioManager;
 import android.media.session.MediaSessionLegacyHelper;
 import android.os.FileObserver;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -47,15 +43,12 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.SparseIntArray;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.android.internal.os.DeviceKeyHandler;
 import com.android.internal.util.ArrayUtils;
 
 import org.lineageos.device.DeviceSettings.Constants;
-import org.lineageos.device.DeviceSettings.R;
 
 import vendor.oneplus.camera.CameraHIDL.V1_0.IOnePlusCameraProvider;
 
@@ -67,11 +60,8 @@ public class KeyHandler implements DeviceKeyHandler {
     private static String FPNAV_ENABLED_PROP = "sys.fpnav.enabled";
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
-    public static final String PACKAGE_SYSTEMUI = "com.android.systemui";
-
     private static final SparseIntArray sSupportedSliderZenModes = new SparseIntArray();
     private static final SparseIntArray sSupportedSliderRingModes = new SparseIntArray();
-    private static final SparseIntArray sSupportedSliderToastModes = new SparseIntArray();
     static {
         sSupportedSliderZenModes.put(Constants.KEY_VALUE_TOTAL_SILENCE, Settings.Global.ZEN_MODE_NO_INTERRUPTIONS);
         sSupportedSliderZenModes.put(Constants.KEY_VALUE_SILENT, Settings.Global.ZEN_MODE_OFF);
@@ -84,12 +74,6 @@ public class KeyHandler implements DeviceKeyHandler {
         sSupportedSliderRingModes.put(Constants.KEY_VALUE_PRIORTY_ONLY, AudioManager.RINGER_MODE_NORMAL);
         sSupportedSliderRingModes.put(Constants.KEY_VALUE_VIBRATE, AudioManager.RINGER_MODE_VIBRATE);
         sSupportedSliderRingModes.put(Constants.KEY_VALUE_NORMAL, AudioManager.RINGER_MODE_NORMAL);
-
-        sSupportedSliderToastModes.put(Constants.KEY_VALUE_TOTAL_SILENCE, R.string.notification_slider_mode_total_silence);
-        sSupportedSliderToastModes.put(Constants.KEY_VALUE_SILENT, R.string.notification_slider_mode_silent);
-        sSupportedSliderToastModes.put(Constants.KEY_VALUE_PRIORTY_ONLY, R.string.notification_slider_mode_priority_only);
-        sSupportedSliderToastModes.put(Constants.KEY_VALUE_VIBRATE, R.string.notification_slider_mode_vibrate);
-        sSupportedSliderToastModes.put(Constants.KEY_VALUE_NORMAL, R.string.notification_slider_mode_none);
     }
 
     public static final String CLIENT_PACKAGE_NAME = "com.oneplus.camera";
@@ -113,7 +97,6 @@ public class KeyHandler implements DeviceKeyHandler {
     private ClientPackageNameObserver mClientObserver;
     private IOnePlusCameraProvider mProvider;
     private boolean isOPCameraAvail;
-    private Toast toast;
 
     private BroadcastReceiver mSystemStateReceiver = new BroadcastReceiver() {
         @Override
@@ -186,8 +169,6 @@ public class KeyHandler implements DeviceKeyHandler {
 
         mAudioManager.setRingerModeInternal(sSupportedSliderRingModes.get(keyCodeValue));
         mNotificationManager.setZenMode(sSupportedSliderZenModes.get(keyCodeValue), null, TAG);
-        showToast(sSupportedSliderToastModes.get(keyCodeValue),
-                Toast.LENGTH_SHORT, scanCode == 601 ? 350 : scanCode == 602 ? 260 : 170);
         doHapticFeedback();
         return null;
     }
@@ -248,37 +229,5 @@ public class KeyHandler implements DeviceKeyHandler {
         // Note: Only works with ambient display enabled.
         mContext.sendBroadcastAsUser(new Intent(DOZE_INTENT),
                 new UserHandle(UserHandle.USER_CURRENT));
-    }
-
-    void showToast(int messageId, int duration, int yOffset) {
-        Context resCtx = getPackageContext(mContext, "org.lineageos.device.DeviceSettings");
-        final String message = resCtx.getResources().getString(messageId);
-        Context ctx = getPackageContext(mContext, PACKAGE_SYSTEMUI);
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (toast != null) toast.cancel();
-                toast = Toast.makeText(ctx, message, duration);
-                toast.setGravity(Gravity.TOP|Gravity.RIGHT, 0, yOffset);
-                toast.show();
-            }
-        });
-    }
-
-    public static Context getPackageContext(Context context, String packageName) {
-        Context pkgContext = null;
-        if (context.getPackageName().equals(packageName)) {
-            pkgContext = context;
-        } else {
-            try {
-                pkgContext = context.createPackageContext(packageName,
-                        Context.CONTEXT_IGNORE_SECURITY
-                                | Context.CONTEXT_INCLUDE_CODE);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return pkgContext;
     }
 }
