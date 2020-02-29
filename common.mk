@@ -395,7 +395,7 @@ PRODUCT_PACKAGES += \
 
 # Recorder
 PRODUCT_PACKAGES += \
-    Recorder
+    OPScreenRecorder
 
 # RIL
 PRODUCT_PACKAGES += \
