@@ -23,4 +23,5 @@
 
     <!-- FOD recognizing animation -->
     <dimen name="fod_animation_size">550.0px</dimen>
+    <dimen name="fod_animation_offset">20.0px</dimen>
 </resources>
