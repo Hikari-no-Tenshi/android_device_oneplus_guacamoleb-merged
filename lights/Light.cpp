@@ -24,6 +24,10 @@
 #include <android-base/stringprintf.h>
 #include <fstream>
 
+#define LCD_BRIGHTNESS_MIN 1 // Matches config_screenBrightnessSettingMinimum
+#define LCD_BRIGHTNESS_MAX 255
+#define LCD_BRIGHTNESS_DELTA (LCD_BRIGHTNESS_MAX - LCD_BRIGHTNESS_MIN)
+
 namespace android {
 namespace hardware {
 namespace light {
@@ -59,6 +63,13 @@ Light::Light() {
     mLights.emplace(Type::BACKLIGHT, std::bind(&Light::handleBacklight, this, std::placeholders::_1));
 }
 
+static uint32_t applyGamma(const uint32_t brightness) {
+    if (brightness < LCD_BRIGHTNESS_MIN)
+        return 0;
+    return LCD_BRIGHTNESS_MIN + LCD_BRIGHTNESS_DELTA *
+        cbrt(((double)brightness - LCD_BRIGHTNESS_MIN)/LCD_BRIGHTNESS_DELTA);
+}
+
 void Light::handleBacklight(const LightState& state) {
     int maxBrightness = get("/sys/class/backlight/panel0-backlight/max_brightness", -1);
     if (maxBrightness < 0) {
@@ -68,6 +79,7 @@ void Light::handleBacklight(const LightState& state) {
     int brightness = sentBrightness * maxBrightness / 255;
     LOG(DEBUG) << "Writing backlight brightness " << brightness
                << " (orig " << sentBrightness << ")";
+    brightness = applyGamma(brightness);
     set("/sys/class/backlight/panel0-backlight/brightness", brightness);
 }
 
