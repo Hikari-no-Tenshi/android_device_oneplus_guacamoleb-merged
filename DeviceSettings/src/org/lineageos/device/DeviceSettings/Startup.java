@@ -67,10 +67,6 @@ public class Startup extends BroadcastReceiver {
         mHBM = false;
         restore(WideColorModeSwitch.getFile(), enabled);
         }
-        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_FPS_INFO, false);
-        if (enabled) {
-            context.startService(new Intent(context, FPSInfoService.class));
-        }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_GESTURE_SINGLE_TAP_SWITCH, false);
         if (enabled) {
         mHBM = false;

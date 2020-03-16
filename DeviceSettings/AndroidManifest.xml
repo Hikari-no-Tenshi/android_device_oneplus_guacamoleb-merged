@@ -117,11 +117,6 @@
             </intent-filter>
         </service>
 
-        <!-- FPS info -->
-        <service android:name="org.lineageos.device.DeviceSettings.FPSInfoService"
-                android:exported="false">
-        </service>
-
         <!-- Search Provider -->
         <provider
             android:name=".ConfigPanelSearchIndexablesProvider"
