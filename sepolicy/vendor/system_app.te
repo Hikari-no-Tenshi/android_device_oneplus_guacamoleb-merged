@@ -3,3 +3,5 @@ allow system_app sysfs_graphics:file r_file_perms;
 # Allow DeviceSettings to read and write to proc_touchpanel, to toggle single-tap gesture
 allow system_app proc_touchpanel:dir search;
 allow system_app proc_touchpanel:file rw_file_perms;
+# Allow DeviceSettings to set night mode prop
+set_prop(system_app, powerctl_prop)

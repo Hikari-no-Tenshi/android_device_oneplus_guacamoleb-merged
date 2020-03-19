@@ -20,18 +20,22 @@ package org.lineageos.device.DeviceSettings;
 import android.Manifest;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.session.MediaSessionLegacyHelper;
+import android.net.Uri;
 import android.os.FileObserver;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -58,6 +62,8 @@ public class KeyHandler implements DeviceKeyHandler {
     private static final boolean DEBUG = false;
     private static final int GESTURE_REQUEST = 1;
     private static String FPNAV_ENABLED_PROP = "sys.fpnav.enabled";
+    private static String NIGHT_MODE_ENABLED_PROP = "sys.night_mode.enabled";
+    private static String NIGHT_MODE_COLOR_TEMPERATURE_PROP = "sys.night_mode.color_temperature";
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
     private static final SparseIntArray sSupportedSliderZenModes = new SparseIntArray();
@@ -97,6 +103,7 @@ public class KeyHandler implements DeviceKeyHandler {
     private ClientPackageNameObserver mClientObserver;
     private IOnePlusCameraProvider mProvider;
     private boolean isOPCameraAvail;
+    private Handler mHandler;
 
     private BroadcastReceiver mSystemStateReceiver = new BroadcastReceiver() {
         @Override
@@ -113,6 +120,7 @@ public class KeyHandler implements DeviceKeyHandler {
 
     public KeyHandler(Context context) {
         mContext = context;
+        mHandler = new Handler(Looper.getMainLooper());
         mDispOn = true;
         mPowerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         mNotificationManager
@@ -135,6 +143,59 @@ public class KeyHandler implements DeviceKeyHandler {
             mClientObserver = new ClientPackageNameObserver(CLIENT_PACKAGE_PATH);
             mClientObserver.startWatching();
         }
+
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
+    }
+
+    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private class CustomSettingsObserver extends ContentObserver {
+
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.NIGHT_DISPLAY_ACTIVATED),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.NIGHT_DISPLAY_COLOR_TEMPERATURE),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.NIGHT_DISPLAY_ACTIVATED))) {
+                updateNightModeStatus();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.NIGHT_DISPLAY_COLOR_TEMPERATURE))) {
+                updateNightModeColorTemperature();
+            }
+        }
+
+        public void update() {
+            updateNightModeStatus();
+            updateNightModeColorTemperature();
+        }
+    }
+
+    private void updateNightModeStatus() {
+        boolean nightModeEnabled = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.NIGHT_DISPLAY_ACTIVATED,
+                0,
+                UserHandle.USER_CURRENT) != 0;
+        SystemProperties.set(NIGHT_MODE_ENABLED_PROP, nightModeEnabled ? "1" : "0");
+    }
+
+    private void updateNightModeColorTemperature() {
+        int colorTemperature = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.NIGHT_DISPLAY_COLOR_TEMPERATURE,
+                -1,
+                UserHandle.USER_CURRENT);
+        SystemProperties.set(NIGHT_MODE_COLOR_TEMPERATURE_PROP, String.valueOf(colorTemperature));
     }
 
     private boolean hasSetupCompleted() {

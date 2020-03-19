@@ -19,6 +19,7 @@
 
 #define LOG_TAG "sensors_multihal"
 #define LOG_NDEBUG 1
+#include <android-base/properties.h>
 #include <cutils/atomic.h>
 #include <cutils/properties.h>
 #include <hardware/sensors.h>
@@ -43,6 +44,8 @@
 #include <unistd.h>
 
 #include "screenshot.h"
+
+using android::base::GetProperty;
 
 static pthread_mutex_t init_modules_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t init_sensors_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -581,6 +584,14 @@ void light_sensor_correction(sensors_event_t *ev) {
     uint8_t r = buffer[0];
     uint8_t g = buffer[1];
     uint8_t b = buffer[2];
+    bool nightModeEnabled = android::base::GetProperty("sys.night_mode.enabled", "0") == "1";
+    int colorTemperature = (int) stoi(android::base::GetProperty("sys.night_mode.color_temperature", "0"));
+    if (nightModeEnabled && colorTemperature > 0) {
+        float squareTemperature = colorTemperature * colorTemperature;
+        r = r * (squareTemperature * 0.0 + colorTemperature * 0.0 + 1.0);
+        g = g * (squareTemperature * -0.00000000962353339 + colorTemperature * 0.000153045476 + 0.390782778);
+        b = b * (squareTemperature * -0.0000000189359041 + colorTemperature * 0.000302412211 + -0.198650895);
+    }
     ALOGV("Screen Color Above Sensor: %d, %d, %d", r, g, b);
     ALOGV("Original reading: %f", ev->light);
     int screen_brightness = get("/sys/class/backlight/panel0-backlight/brightness", 0);
