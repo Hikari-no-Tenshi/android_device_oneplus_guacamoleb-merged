@@ -36,21 +36,17 @@
          backlight values for lux levels between these control points.
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
-        <item>1</item>
-        <item>4</item>
-        <item>12</item>
+        <item>10</item>
         <item>20</item>
-        <item>40</item>
-        <item>65</item>
-        <item>95</item>
+        <item>80</item>
         <item>140</item>
         <item>200</item>
         <item>350</item>
-        <item>650</item>
-        <item>1300</item>
-        <item>2000</item>
-        <item>3300</item>
-        <item>6000</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>9000</item>
+        <item>15000</item>
+        <item>30000</item>
     </integer-array>
     <!-- Array of desired screen brightness in nits corresponding to the lux values
          in the config_autoBrightnessLevels array. As with config_screenBrightnessMinimumNits and
@@ -64,22 +60,18 @@
          array. The brightness values must be non-negative and non-decreasing. This must be
          overridden in platform specific overlays -->
     <array name="config_autoBrightnessDisplayValuesNits">
-        <item>2.0487</item>
-        <item>4.8394</item>
-        <item>17.2619</item>
-        <item>39.2619</item>
-        <item>50.671</item>
-        <item>92.3019</item>
-        <item>94.2512</item>
-        <item>98.37</item>
-        <item>100.152</item>
-        <item>105.297</item>
-        <item>120.385</item>
-        <item>142.064</item>
-        <item>226.5179</item>
-        <item>248.0267</item>
-        <item>353.2814</item>
-        <item>427.6287</item>
+        <item>4</item>
+        <item>12</item>
+        <item>35</item>
+        <item>50</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+        <item>125</item>
+        <item>180</item>
+        <item>250</item>
+        <item>300</item>
     </array>
 
     <!-- An array of floats describing the screen brightness in nits corresponding to the backlight
@@ -90,8 +82,10 @@
          This array should be equal in size to config_screenBrightnessBacklight -->
     <array name="config_screenBrightnessNits">
         <item>2.0482</item>
-        <item>2.7841</item>
-        <item>3.79505</item>
+        <item>2.543</item>
+        <item>3.0253</item>
+        <item>3.5077</item>
+        <item>4.0824</item>
         <item>4.4748</item>
         <item>5.08</item>
         <item>6.4233</item>
@@ -163,7 +157,6 @@
          values in the config_screenBrightnessNits array.
          This array should be equal in size to config_screenBrightnessBacklight. -->
     <integer-array name="config_screenBrightnessBacklight">
-        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -184,7 +177,12 @@
         <item>18</item>
         <item>19</item>
         <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
         <item>25</item>
+        <item>26</item>
         <item>30</item>
         <item>35</item>
         <item>40</item>
@@ -192,13 +190,7 @@
         <item>50</item>
         <item>55</item>
         <item>60</item>
-        <item>65</item>
         <item>70</item>
-        <item>75</item>
-        <item>80</item>
-        <item>85</item>
-        <item>90</item>
-        <item>95</item>
         <item>100</item>
         <item>105</item>
         <item>110</item>
@@ -230,87 +222,11 @@
         <item>240</item>
         <item>245</item>
         <item>250</item>
+        <item>251</item>
+        <item>252</item>
+        <item>253</item>
+        <item>254</item>
         <item>255</item>
-    </integer-array>
-
-    <!-- Array of hysteresis constraint values for brightening, represented as tenths of a
-         percent. The length of this array is assumed to be one greater than
-         config_dynamicHysteresisLuxLevels. The brightening threshold is calculated as
-         lux * (1.0f + CONSTRAINT_VALUE). When the current lux is higher than this threshold,
-         the screen brightness is recalculated. See the config_dynamicHysteresisLuxLevels
-         description for how the constraint value is chosen. -->
-    <integer-array name="config_dynamicHysteresisBrightLevels">
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>250</item>
-        <item>300</item>
-        <item>300</item>
-        <item>300</item>
-        <item>300</item>
-        <item>300</item>
-        <item>300</item>
-        <item>400</item>
-        <item>500</item>
-    </integer-array>
-
-    <!-- Array of hysteresis constraint values for darkening, represented as tenths of a
-         percent. The length of this array is assumed to be one greater than
-         config_dynamicHysteresisLuxLevels. The darkening threshold is calculated as
-         lux * (1.0f - CONSTRAINT_VALUE). When the current lux is lower than this threshold,
-         the screen brightness is recalculated. See the config_dynamicHysteresisLuxLevels
-         description for how the constraint value is chosen. -->
-    <integer-array name="config_dynamicHysteresisDarkLevels">
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>200</item>
-        <item>300</item>
-        <item>400</item>
-        <item>400</item>
-        <item>400</item>
-        <item>400</item>
-        <item>400</item>
-        <item>400</item>
-        <item>500</item>
-        <item>500</item>
-    </integer-array>
-
-    <!-- Array of ambient lux threshold values. This is used for determining hysteresis constraint
-         values by calculating the index to use for lookup and then setting the constraint value
-         to the corresponding value of the array. The new brightening hysteresis constraint value
-         is the n-th element of config_dynamicHysteresisBrightLevels, and the new darkening
-         hysteresis constraint value is the n-th element of config_dynamicHysteresisDarkLevels.
-         The (zero-based) index is calculated as follows: (MAX is the largest index of the array)
-         condition                      calculated index
-         value < lux[0]                 0
-         lux[n] <= value < lux[n+1]     n+1
-         lux[MAX] <= value              MAX+1 -->
-    <integer-array name="config_dynamicHysteresisLuxLevels">
-        <item>1</item>
-        <item>4</item>
-        <item>12</item>
-        <item>20</item>
-        <item>40</item>
-        <item>65</item>
-        <item>95</item>
-        <item>140</item>
-        <item>200</item>
-        <item>350</item>
-        <item>650</item>
-        <item>1300</item>
-        <item>2000</item>
-        <item>3300</item>
-        <item>6000</item>
     </integer-array>
 
     <!-- Screen brightness used to dim the screen when the user activity
