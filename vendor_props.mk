@@ -130,7 +130,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.display.disable_hw_recovery_dump=1 \
     vendor.display.disable_inline_rotator=1 \
     vendor.display.disable_scaler=0 \
-    vendor.display.enable_null_display=0
+    vendor.display.enable_null_display=0 \
+    ro.sf.lcd_density=420 \
+    vendor.display.disable_mask_layer_hint=1
 
 # DRM
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -152,6 +154,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # GPS
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.backup.ntpServer=0.pool.ntp.org
+
+# Google
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.build.release_type=release \
+    ro.vendor.build.real.device=true \
+    vendor.product.device=guacamoleb \
+    vendor.product.manufacturer=OPD
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \

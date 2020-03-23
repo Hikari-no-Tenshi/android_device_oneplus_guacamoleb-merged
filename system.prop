@@ -38,6 +38,10 @@ persist.vendor.overlay.izat.optin=rro
 ro.location.osnlp.package=com.google.android.gms
 ro.location.osnlp.region.package=
 
+# Google
+ro.opa.eligible_device=true
+ro.build.release_type=release
+
 # Graphics
 debug.sf.enable_hwc_vds=1
 vendor.display.enable_rotator_ui=1

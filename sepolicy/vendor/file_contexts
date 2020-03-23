@@ -1,6 +1,7 @@
 # Binaries
 /(vendor|system/vendor)/bin/vl53l1_daemon_main    u:object_r:vl53l1_daemon_main_exec:s0
 /(vendor|system/vendor)/bin/wifi-mac-generator    u:object_r:wifi-mac-generator_exec:s0
+/(vendor|system/vendor)/bin/tri-state-key-calibrate_daemon u:object_r:tri-state-key-calibrate_daemon_exec:s0
 
 # Block devices
 /dev/block/platform/soc/1d84000\.ufshc/by-name/config         u:object_r:frp_block_device:s0
@@ -65,3 +66,5 @@
 /sys/module/fsc(/.*)?                                              u:object_r:sysfs_fsc:s0
 /sys/module/stmvl53l1(/.*)?                                        u:object_r:sysfs_vl53l1:s0
 /sys/project_info(/.*)?                                            u:object_r:sysfs_project_info:s0
+/sys/bus/platform/devices/soc/soc:tri_state_key/hall_data_calib    u:object_r:sysfs_tri_state_key:s0
+/sys/devices/platform/soc/soc:tri_state_key/hall_data_calib        u:object_r:sysfs_tri_state_key:s0
