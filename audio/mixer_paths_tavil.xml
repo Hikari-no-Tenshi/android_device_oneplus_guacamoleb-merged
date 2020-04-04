@@ -2799,6 +2799,13 @@
 <!-- #endif VENDOR_EDIT-->
     </path>
 
+<!-- ifdef VENDOR_EDIT -->
+<!-- liuhaituo@MM.Audio, 2019/12/31, Add for Sva record training wav -->
+    <path name="sva-re-mic">
+        <path name="amic4" />
+    </path>
+<!-- endif -->
+
 <!--#ifdef VENDOR_EDIT  -->
     <path name="handset-mic-karaoke">
         <ctl name="AIF1_CAP Mixer SLIM TX5" value="1" />
