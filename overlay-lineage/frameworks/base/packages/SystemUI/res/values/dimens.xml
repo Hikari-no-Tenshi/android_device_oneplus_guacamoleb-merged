@@ -28,8 +28,6 @@
     <!-- Bottom margin size when fingerprint in display is active -->
     <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">25dp</dimen>
 
-    <!-- The margin between Emergency Carrier area and navbar
-         to incorporate the FOD icon -->
-    <dimen name="keyguard_security_fod_view_margin">100dp</dimen>
-    <dimen name="keyguard_security_fod_view_margin_max">148dp</dimen>
+    <!-- The minimum bottom margin of the keyguard security container -->
+    <dimen name="kg_security_container_min_bottom_margin">509px</dimen>
 </resources>
