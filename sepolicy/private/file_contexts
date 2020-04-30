@@ -1,6 +1,3 @@
-# Binaries
-/system/bin/tri-state-key_daemon    u:object_r:tri-state-key_daemon_exec:s0
-
 /data/misc/lineage/client_package_name                u:object_r:lineage_data_file:s0
 
 /sys/devices/platform/soc/89c000.i2c/i2c-2/2-005a/leds/vibrator/level u:object_r:sysfs_vibrator:s0
