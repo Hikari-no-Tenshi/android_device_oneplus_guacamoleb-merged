@@ -12,9 +12,6 @@ $(call inherit-product-if-exists, vendor/google/customization/config.mk)
 # Get non-open-source specific aspects
 $(call inherit-product-if-exists, vendor/oneplus/guacamoleb/guacamoleb-vendor.mk)
 
-# Vendor properties
--include $(LOCAL_PATH)/vendor_props.mk
-
 # Additional native libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
