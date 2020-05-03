@@ -68,3 +68,6 @@ get_prop(hal_sensors_default, vendor_sensors_prop)
 
 # Allow hal_sensors_default to get night mode prop
 get_prop(hal_sensors_default, powerctl_prop)
+
+# Allow hal_sensors_default to read and write to sysfs nodes
+allow hal_sensors_default sysfs:file { read write getattr open };
