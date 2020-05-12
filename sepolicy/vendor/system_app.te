@@ -5,3 +5,6 @@ allow system_app proc_touchpanel:dir search;
 allow system_app proc_touchpanel:file rw_file_perms;
 # Allow DeviceSettings to set night mode prop
 set_prop(system_app, powerctl_prop)
+
+# allow system_app to interact with pasr hal
+hal_client_domain(system_app, hal_pasrmanager)
