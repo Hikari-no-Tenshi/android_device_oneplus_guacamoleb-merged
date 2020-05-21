@@ -71,16 +71,6 @@ limitations under the License
             android:text="@string/dci_mode_title_new"
             android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Subhead"
             android:paddingStart="20dp" />
-
-        <RadioButton
-            android:id="@+id/wide_color_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/listPreferredItemHeightSmall"
-            android:gravity="center_vertical"
-            android:text="@string/wide_color_mode_title"
-            android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Subhead"
-            android:paddingStart="20dp" />
     </RadioGroup>
 
     <LinearLayout

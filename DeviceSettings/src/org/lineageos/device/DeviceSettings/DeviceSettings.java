@@ -49,7 +49,6 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_DC_SWITCH = "dc";
     public static final String KEY_DCI_SWITCH = "dci";
     public static final String KEY_NIGHT_SWITCH = "night";
-    public static final String KEY_WIDECOLOR_SWITCH = "widecolor";
     public static final String KEY_GESTURE_SINGLE_TAP_SWITCH = "gesture_single_tap";
 
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
