@@ -75,19 +75,30 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor edit = sharedPrefs.edit();
         if (checkedId == R.id.srgb_mode) {
-            Utils.writeValue(SRGBModeSwitch.getFile(), "1");
+            Utils.setDisplayMode(16, 0);
+            Utils.setDisplayMode(17, 0);
+            Utils.setDisplayMode(18, 0);
+            Utils.setDisplayMode(20, 0);
+            Utils.setDisplayMode(21, 0);
+            Utils.setDisplayMode(18, 1);
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, true);
-            Utils.writeValue(DCIModeSwitch.getFile(), "0");
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         } else if (checkedId == R.id.dci_mode) {
-            Utils.writeValue(DCIModeSwitch.getFile(), "1");
+            Utils.setDisplayMode(16, 0);
+            Utils.setDisplayMode(17, 0);
+            Utils.setDisplayMode(18, 0);
+            Utils.setDisplayMode(20, 0);
+            Utils.setDisplayMode(21, 0);
+            Utils.setDisplayMode(16, 1);
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, true);
-            Utils.writeValue(SRGBModeSwitch.getFile(), "0");
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
         } else if (checkedId == R.id.off_mode) {
-            Utils.writeValue(SRGBModeSwitch.getFile(), "0");
+            Utils.setDisplayMode(16, 0);
+            Utils.setDisplayMode(17, 0);
+            Utils.setDisplayMode(18, 0);
+            Utils.setDisplayMode(20, 0);
+            Utils.setDisplayMode(21, 0);
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
-            Utils.writeValue(DCIModeSwitch.getFile(), "0");
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         }
         edit.commit();

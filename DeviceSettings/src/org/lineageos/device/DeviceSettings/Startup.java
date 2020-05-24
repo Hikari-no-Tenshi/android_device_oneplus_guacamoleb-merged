@@ -40,7 +40,12 @@ public class Startup extends BroadcastReceiver {
 
         if (enabled) {
         mHBM = false;
-        restore(SRGBModeSwitch.getFile(), enabled);
+        Utils.setDisplayMode(16, 0);
+        Utils.setDisplayMode(17, 0);
+        Utils.setDisplayMode(18, 0);
+        Utils.setDisplayMode(20, 0);
+        Utils.setDisplayMode(21, 0);
+        Utils.setDisplayMode(18, 1);
 		}
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HBM_SWITCH, false);
         if (enabled) {
@@ -55,7 +60,12 @@ public class Startup extends BroadcastReceiver {
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         if (enabled) {
         mHBM = false;
-        restore(DCIModeSwitch.getFile(), enabled);
+        Utils.setDisplayMode(16, 0);
+        Utils.setDisplayMode(17, 0);
+        Utils.setDisplayMode(18, 0);
+        Utils.setDisplayMode(20, 0);
+        Utils.setDisplayMode(21, 0);
+        Utils.setDisplayMode(16, 1);
         }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
         if (enabled) {

@@ -8,3 +8,6 @@ set_prop(system_app, powerctl_prop)
 
 # allow system_app to interact with pasr hal
 hal_client_domain(system_app, hal_pasrmanager)
+
+allow system_app hal_display_hwservice:hwservice_manager find;
+binder_call(system_app, hal_display_default)
