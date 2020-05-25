@@ -80,7 +80,7 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
             Utils.setDisplayMode(18, 0);
             Utils.setDisplayMode(20, 0);
             Utils.setDisplayMode(21, 0);
-            Utils.setDisplayMode(18, 1);
+            Utils.setDisplayMode(20, 1);
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, true);
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         } else if (checkedId == R.id.dci_mode) {
@@ -89,7 +89,7 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
             Utils.setDisplayMode(18, 0);
             Utils.setDisplayMode(20, 0);
             Utils.setDisplayMode(21, 0);
-            Utils.setDisplayMode(16, 1);
+            Utils.setDisplayMode(21, 1);
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, true);
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
         } else if (checkedId == R.id.off_mode) {
