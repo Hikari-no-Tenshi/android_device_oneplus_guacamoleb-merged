@@ -18,7 +18,7 @@
     <string name="display_title">Режим екрану</string>
     <string name="display_summary">Налаштування і параметри екрана</string>
     <string name="srgb_mode_summary"></string>
-    <string name="srgb_mode_title">Режим sRGB</string>
+    <string name="srgb_mode_title">Реалістичні кольори</string>
     <string name="hbm_mode_summary"></string>
     <string name="hbm_mode_title">Режим високої яскравості</string>
     <string name="dc_mode_summary"></string>
@@ -26,7 +26,7 @@
     <string name="adaptive_mode_title">Адаптивний режим</string>
     <string name="oneplus_mode_title">Режим OnePlus</string>
     <string name="dci_mode_summary"></string>
-    <string name="dci_mode_title">Режим широкої колірної гами DCI-P3</string>
+    <string name="dci_mode_title_new">Яскраві кольори</string>
     <string name="Night_mode_summary"></string>
     <string name="Night_mode_title">Нічний режим</string>
     <string name="panel_category_title">Режим панелей</string>
