@@ -117,6 +117,8 @@
             </intent-filter>
         </service>
 
+        <service android:name="org.lineageos.device.DeviceSettings.AutoHighBrightnessModeService" />
+
         <!-- Search Provider -->
         <provider
             android:name=".ConfigPanelSearchIndexablesProvider"
