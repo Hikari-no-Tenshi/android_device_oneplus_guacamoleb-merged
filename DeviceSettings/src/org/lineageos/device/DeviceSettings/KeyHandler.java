@@ -191,9 +191,10 @@ public class KeyHandler implements DeviceKeyHandler {
     }
 
     private void updateNightModeColorTemperature() {
+        Resources resources = mContext.getResources();
         int colorTemperature = Settings.Secure.getIntForUser(
                 mContext.getContentResolver(), Settings.Secure.NIGHT_DISPLAY_COLOR_TEMPERATURE,
-                -1,
+                resources.getInteger(com.android.internal.R.integer.config_nightDisplayColorTemperatureDefault),
                 UserHandle.USER_CURRENT);
         SystemProperties.set(NIGHT_MODE_COLOR_TEMPERATURE_PROP, String.valueOf(colorTemperature));
     }
