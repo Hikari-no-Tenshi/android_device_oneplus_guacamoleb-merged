@@ -51,8 +51,8 @@
     <!--#ifdef VENDOR_EDIT 
         dujie@MM.Audio, 2020/01/15, reduce the minimum volume loudness -->
         <point>1,-5100</point>
-        <point>20,-2700</point>
-        <point>60,-1500</point>
+        <point>20,-2650</point>
+        <point>60,-1150</point>
         <point>100,0</point>
     <!--#endif /*VENDOR_EDIT*/-->
     </reference>
