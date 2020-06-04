@@ -23,6 +23,8 @@
     <string name="hbm_mode_title">High brightness mode</string>
     <string name="hbm_autobrightness_summary"></string>
     <string name="hbm_autobrightness_title">Automatic High brightness mode</string>
+    <string name="hbm_autobrightness_threshold_summary"></string>
+    <string name="hbm_autobrightness_threshold_title">Automatic High brightness mode threshold (lux)</string>
     <string name="dc_mode_summary"></string>
     <string name="dc_mode_title">DC-Dimming</string>
     <string name="dci_mode_summary"></string>
