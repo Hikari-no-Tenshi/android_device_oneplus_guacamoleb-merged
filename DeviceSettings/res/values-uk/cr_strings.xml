@@ -21,6 +21,10 @@
     <string name="srgb_mode_title">Реалістичні кольори</string>
     <string name="hbm_mode_summary"></string>
     <string name="hbm_mode_title">Режим високої яскравості</string>
+    <string name="hbm_autobrightness_summary"></string>
+    <string name="hbm_autobrightness_title">Автоматичний Режим високої яскравості</string>
+    <string name="hbm_autobrightness_threshold_summary"></string>
+    <string name="hbm_autobrightness_threshold_title">Поріг Автоматичного Режиму високої яскравості (люкс)</string>
     <string name="dc_mode_summary"></string>
     <string name="dc_mode_title">DC-Dimming</string>
     <string name="adaptive_mode_title">Адаптивний режим</string>
