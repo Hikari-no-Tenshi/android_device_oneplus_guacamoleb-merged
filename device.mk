@@ -183,6 +183,13 @@ PRODUCT_PACKAGES += \
     com.quicinc.cne \
     services-ext
 
+# Device Personalization Services
+PRODUCT_PACKAGES += \
+    MatchmakerPrebuilt
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilts/product/etc/permissions/privapp-permissions-matchmaker.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-matchmaker.xml
+
 # Init scripts
 PRODUCT_PACKAGES += \
     coredump.sh \
