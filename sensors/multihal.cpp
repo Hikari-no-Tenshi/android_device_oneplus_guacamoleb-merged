@@ -30,7 +30,6 @@
 #include <fstream>
 #include <map>
 
-#include <cmath>
 #include <dirent.h>
 #include <dlfcn.h>
 #include <errno.h>
@@ -609,7 +608,7 @@ void light_sensor_correction(sensors_event_t *ev) {
         correction += als_bias;
     }
     ALOGV("Final correction: %f", correction);
-    ev->light -= std::round(correction);
+    ev->light -= correction;
     if (ev->light < 0)
         ev->light = 0;
     free_screen_buffer();
