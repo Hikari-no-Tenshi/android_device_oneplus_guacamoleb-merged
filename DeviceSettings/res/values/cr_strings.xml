@@ -62,10 +62,6 @@
     <string name="vib_notif_strength_title_head">Notification Strength</string>
     <string name="vib_notif_strength_summary_head">Define the strength of the vibrator during an incoming notification</string>
 
-    <string name="doze_category_title">Ambient display</string>
-    <string name="single_tap_gesture_title">Single-tap</string>
-    <string name="single_tap_gesture_summary">Pulse notifications and allow fingerprint unlock on tap</string>
-
     <!-- Log Tile -->
     <string name="quick_settings_log_tile_label">LogTile</string>
     <string name="quick_settings_log_tile_dialog_title">Options</string>
