@@ -70,3 +70,4 @@
 /sys/module/fsc(/.*)?                                              u:object_r:sysfs_fsc:s0
 /sys/module/stmvl53l1(/.*)?                                        u:object_r:sysfs_vl53l1:s0
 /sys/project_info(/.*)?                                            u:object_r:sysfs_project_info:s0
+/sys/module/touchpanel_common_driver/parameters/haptic_feedback_disable u:object_r:sysfs_haptic_feedback:s0

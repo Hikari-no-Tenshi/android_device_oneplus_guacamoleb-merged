@@ -55,6 +55,7 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_DC_SWITCH = "dc";
     public static final String KEY_DCI_SWITCH = "dci";
     public static final String KEY_NIGHT_SWITCH = "night";
+    public static final String KEY_HAPTIC_FEEDBACK_SWITCH = "haptic_feedback";
     private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
 
     public static final String KEY_SETTINGS_PREFIX = "device_setting_";
@@ -62,6 +63,7 @@ public class DeviceSettings extends PreferenceFragment
     private static TwoStatePreference mHBMModeSwitch;
     private static TwoStatePreference mHBMAutobrightnessSwitch;
     private static TwoStatePreference mDCModeSwitch;
+    private static TwoStatePreference mHapticFeedbackSwitch;
     private static TwoStatePreference mEnableDolbyAtmos;
     private ListPreference mTopKeyPref;
     private ListPreference mMiddleKeyPref;
@@ -101,6 +103,11 @@ public class DeviceSettings extends PreferenceFragment
         mDCModeSwitch.setEnabled(DCModeSwitch.isSupported());
         mDCModeSwitch.setChecked(DCModeSwitch.isCurrentlyEnabled(this.getContext()));
         mDCModeSwitch.setOnPreferenceChangeListener(new DCModeSwitch());
+
+        mHapticFeedbackSwitch = (TwoStatePreference) findPreference(KEY_HAPTIC_FEEDBACK_SWITCH);
+        mHapticFeedbackSwitch.setEnabled(HapticFeedbackSwitch.isSupported());
+        mHapticFeedbackSwitch.setChecked(HapticFeedbackSwitch.isCurrentlyEnabled(this.getContext()));
+        mHapticFeedbackSwitch.setOnPreferenceChangeListener(new HapticFeedbackSwitch());
 
         mEnableDolbyAtmos = (TwoStatePreference) findPreference(KEY_ENABLE_DOLBY_ATMOS);
         mEnableDolbyAtmos.setOnPreferenceChangeListener(this);

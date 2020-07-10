@@ -71,4 +71,8 @@
     <string name="enable_dolby_title">Включить/Выключить Dolby Atmos</string>
     <string name="enable_dolby_summary">Переключение ТРЕБУЕТ перезагрузки для применения!</string>
     <string name="enable_dolby_info">Примечание: С включённым Dolby Atmos другие EQ эффекты как MusicFX отключены на всех выходах.</string>
+
+    <string name="gestures_category_title">Жесты</string>
+    <string name="haptic_feedback_title">Отключить виброотклик жестов</string>
+    <string name="haptic_feedback_summary"></string>
 </resources>

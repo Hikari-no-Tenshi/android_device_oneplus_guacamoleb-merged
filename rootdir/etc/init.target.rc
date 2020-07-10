@@ -72,6 +72,9 @@ on fs
     chown system system /sys/module/fsc/parameters/enable
     chmod 0664 /sys/module/fsc/parameters/enable
 
+    chown system system /sys/module/touchpanel_common_driver/parameters/haptic_feedback_disable
+    chmod 0664 /sys/module/touchpanel_common_driver/parameters/haptic_feedback_disable
+
 on post-fs
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864

@@ -73,4 +73,8 @@
     <string name="enable_dolby_title">Enable/Disable Dolby Atmos</string>
     <string name="enable_dolby_summary">Switching REQUIRES a reboot to take effect!</string>
     <string name="enable_dolby_info">Note: With Dolby Atmos enabled, other EQ effects like MusicFX are disabled on all outputs.</string>
+
+    <string name="gestures_category_title">Gestures</string>
+    <string name="haptic_feedback_title">Disable gestures haptic feedback</string>
+    <string name="haptic_feedback_summary"></string>
 </resources>

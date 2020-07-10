@@ -28,6 +28,7 @@ import androidx.preference.PreferenceManager;
 public class Startup extends BroadcastReceiver {
 
     private boolean mHBM = false;
+    private boolean mHaptic = false;
 
     @Override
     public void onReceive(final Context context, final Intent bootintent) {
@@ -40,6 +41,7 @@ public class Startup extends BroadcastReceiver {
 
         if (enabled) {
         mHBM = false;
+        mHaptic = false;
         Utils.setDisplayMode(16, 0);
         Utils.setDisplayMode(17, 0);
         Utils.setDisplayMode(18, 0);
@@ -50,16 +52,25 @@ public class Startup extends BroadcastReceiver {
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HBM_SWITCH, false);
         if (enabled) {
         mHBM = true;
+        mHaptic = false;
         restore(HBMModeSwitch.getFile(), enabled);
         }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DC_SWITCH, false);
         if (enabled) {
         mHBM = false;
+        mHaptic = false;
         restore(DCModeSwitch.getFile(), enabled);
+        }
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HAPTIC_FEEDBACK_SWITCH, false);
+        if (enabled) {
+        mHBM = false;
+        mHaptic = true;
+        restore(HapticFeedbackSwitch.getFile(), enabled);
         }
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         if (enabled) {
         mHBM = false;
+        mHaptic = false;
         Utils.setDisplayMode(16, 0);
         Utils.setDisplayMode(17, 0);
         Utils.setDisplayMode(18, 0);
@@ -70,6 +81,7 @@ public class Startup extends BroadcastReceiver {
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
         if (enabled) {
         mHBM = false;
+        mHaptic = false;
         restore(NightModeSwitch.getFile(), enabled);
         }
 
@@ -81,7 +93,7 @@ public class Startup extends BroadcastReceiver {
             return;
         }
         if (enabled) {
-            Utils.writeValue(file, mHBM ? "5" : "1");
+            Utils.writeValue(file, mHBM ? "5" : mHaptic ? "Y" : "1");
         }
     }
 
