@@ -30,7 +30,7 @@ public class HBMAutobrightnessThresholdPreference extends ProperSeekBarPreferenc
 
     private static int mMinVal = 0;
     private static int mMaxVal = 60000;
-    private static int mDefVal = 30000;
+    private static int mDefVal = 20000;
 
     public HBMAutobrightnessThresholdPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -44,7 +44,7 @@ public class HBMAutobrightnessThresholdPreference extends ProperSeekBarPreferenc
         mDefaultValueExists = true;
         mDefaultValue = mDefVal;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mValue = Integer.parseInt(sharedPrefs.getString(DeviceSettings.KEY_HBM_AUTOBRIGHTNESS_THRESHOLD, "30000"));
+        mValue = Integer.parseInt(sharedPrefs.getString(DeviceSettings.KEY_HBM_AUTOBRIGHTNESS_THRESHOLD, "20000"));
 
         setPersistent(false);
     }
