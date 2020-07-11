@@ -145,6 +145,10 @@ USE_DEVICE_SPECIFIC_GPS := true
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 
+# Init
+TARGET_INIT_VENDOR_LIB :=  //$(DEVICE_PATH):libinit_guacamoleb
+TARGET_RECOVERY_DEVICE_MODULES := libinit_guacamoleb
+
 # Keystore
 TARGET_PROVIDES_KEYMASTER := true
 
