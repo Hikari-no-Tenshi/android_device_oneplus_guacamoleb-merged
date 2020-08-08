@@ -58,6 +58,7 @@ void property_override_dual(char const system_prop[],
 
 void vendor_load_properties()
 {
+    property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1900");
     property_override_dual("ro.build.type", "ro.vendor.build.type", "user");
     property_override("ro.boot.verifiedbootstate", "green");
 }
