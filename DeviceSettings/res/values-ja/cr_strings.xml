@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">OnePlus モード</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">DCI-P3 高色域モード</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">夜間モード</string>
     <string name="panel_category_title">パネルモード</string>
     <string name="panel_category_summary">画面カラー補正モード</string>
     <string name="off_mode_title">OFF</string>

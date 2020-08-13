@@ -36,41 +36,39 @@ public class Startup extends BroadcastReceiver {
 
         boolean enabled = false;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
 
+        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
         if (enabled) {
-        mHBM = false;
-        Utils.setDisplayMode(16, 0);
-        Utils.setDisplayMode(17, 0);
-        Utils.setDisplayMode(18, 0);
-        Utils.setDisplayMode(20, 0);
-        Utils.setDisplayMode(21, 0);
-        Utils.setDisplayMode(20, 1);
-		}
+            mHBM = false;
+            Utils.setDisplayMode(16, 0);
+            Utils.setDisplayMode(17, 0);
+            Utils.setDisplayMode(18, 0);
+            Utils.setDisplayMode(20, 0);
+            Utils.setDisplayMode(21, 0);
+            Utils.setDisplayMode(20, 1);
+        }
+
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HBM_SWITCH, false);
         if (enabled) {
-        mHBM = true;
-        restore(HBMModeSwitch.getFile(), enabled);
+            mHBM = true;
+            restore(HBMModeSwitch.getFile(), enabled);
         }
+
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DC_SWITCH, false);
         if (enabled) {
-        mHBM = false;
-        restore(DCModeSwitch.getFile(), enabled);
+            mHBM = false;
+            restore(DCModeSwitch.getFile(), enabled);
         }
+
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         if (enabled) {
-        mHBM = false;
-        Utils.setDisplayMode(16, 0);
-        Utils.setDisplayMode(17, 0);
-        Utils.setDisplayMode(18, 0);
-        Utils.setDisplayMode(20, 0);
-        Utils.setDisplayMode(21, 0);
-        Utils.setDisplayMode(21, 1);
-        }
-        enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_NIGHT_SWITCH, false);
-        if (enabled) {
-        mHBM = false;
-        restore(NightModeSwitch.getFile(), enabled);
+            mHBM = false;
+            Utils.setDisplayMode(16, 0);
+            Utils.setDisplayMode(17, 0);
+            Utils.setDisplayMode(18, 0);
+            Utils.setDisplayMode(20, 0);
+            Utils.setDisplayMode(21, 0);
+            Utils.setDisplayMode(21, 1);
         }
 
         Utils.enableService(context);

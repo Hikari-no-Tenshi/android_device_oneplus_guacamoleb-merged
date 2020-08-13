@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">OnePlus Modus</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">DCI-P3-Modus mit breitem Farbraum</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">Nachtmodus</string>
     <string name="panel_category_title">Panelmodus</string>
     <string name="panel_category_summary">Modi für die Panel-Farbkorrektur</string>
     <string name="off_mode_title">Aus</string>

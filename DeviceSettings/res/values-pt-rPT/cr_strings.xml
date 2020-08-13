@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">Modo OnePlus</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">Modo de gama de cores largas DCI-P3</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">Modo noturno</string>
     <string name="panel_category_title">Modos de painel</string>
     <string name="panel_category_summary">Modos para correção de cor do painel</string>
     <string name="off_mode_title">Desligado</string>

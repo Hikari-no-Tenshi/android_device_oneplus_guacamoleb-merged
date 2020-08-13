@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">OnePlus modu</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">DCI-P3 geniş renk gamı modu</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">Gece modu</string>
     <string name="panel_category_title">Panel modları</string>
     <string name="panel_category_summary">Panel renk düzeltmesi için modlar</string>
     <string name="off_mode_title">Kapalı</string>

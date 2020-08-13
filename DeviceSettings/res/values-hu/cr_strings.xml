@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">OnePlus mód</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">DCI-P3 széles színskála mód</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">Éjszakai mód</string>
     <string name="panel_category_title">Panelmódok</string>
     <string name="panel_category_summary">A panelszín-korrekció módjai</string>
     <string name="off_mode_title">Ki</string>

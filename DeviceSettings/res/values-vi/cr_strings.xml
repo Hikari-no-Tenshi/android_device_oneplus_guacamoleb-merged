@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">Chế độ OnePlus</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">Chế độ Dải màu rộng DCI-P3</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">Chế độ Ban đêm</string>
     <string name="panel_category_title">Chế độ Màn hình</string>
     <string name="panel_category_summary">Các chế độ sửa màu cho tấm nền màn hình</string>
     <string name="off_mode_title">Tắt</string>

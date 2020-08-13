@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">Režim OnePlus</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">Režim širokého barevného spektra DCI-P3</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">Noční režim</string>
     <string name="panel_category_title">Režimy panelu</string>
     <string name="panel_category_summary">Režimy pro korekci barev panelu</string>
     <string name="off_mode_title">Vyp.</string>

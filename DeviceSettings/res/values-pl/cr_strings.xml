@@ -27,8 +27,6 @@
     <string name="oneplus_mode_title">Tryb OnePlus</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">Tryb szerokiej gamy kolorów DCI-P3</string>
-    <string name="Night_mode_summary"></string>
-    <string name="Night_mode_title">Tryb nocny</string>
     <string name="panel_category_title">Tryby wyświetlania</string>
     <string name="panel_category_summary">Tryby wyświetlania z korekcją kolorów</string>
     <string name="off_mode_title">Wyłącz</string>
