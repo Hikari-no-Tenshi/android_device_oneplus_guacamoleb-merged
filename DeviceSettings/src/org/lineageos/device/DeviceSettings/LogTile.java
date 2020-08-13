@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.service.quicksettings.TileService;
+import android.view.ContextThemeWrapper;
 import android.widget.Toast;
 
 import java.io.File;
@@ -41,7 +42,8 @@ public class LogTile extends TileService {
     public Dialog logDialog() {
         CharSequence options[] = new CharSequence[]{
                 "Logcat", "LogcatRadio", "Dmesg"};
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                new ContextThemeWrapper(this, R.style.AlertDialogTheme));
         alertDialog.setTitle(R.string.quick_settings_log_tile_dialog_title);
         alertDialog.setItems(options, new DialogInterface.OnClickListener() {
             @Override
