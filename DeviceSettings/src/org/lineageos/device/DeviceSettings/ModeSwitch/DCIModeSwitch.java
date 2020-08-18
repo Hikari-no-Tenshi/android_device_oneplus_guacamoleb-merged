@@ -52,6 +52,7 @@ public class DCIModeSwitch implements OnPreferenceChangeListener {
         Utils.setDisplayMode(20, 0);
         Utils.setDisplayMode(21, 0);
         Utils.setDisplayMode(21, enabled ? 1 : 0);
+        SystemProperties.set("persist.vendor.sys.color_mode", "21");
         return true;
     }
 }

@@ -18,6 +18,7 @@
 
 #include "FingerprintInscreen.h"
 #include <android-base/logging.h>
+#include <android-base/properties.h>
 #include <hidl/HidlTransportSupport.h>
 #include <fstream>
 
@@ -40,6 +41,10 @@ namespace fingerprint {
 namespace inscreen {
 namespace V1_0 {
 namespace implementation {
+
+int color_mode;
+
+using android::base::GetProperty;
 
 /*
  * Write value to path and close file.
@@ -92,6 +97,13 @@ Return<void> FingerprintInscreen::onRelease() {
 
 Return<void> FingerprintInscreen::onShowFODView() {
     this->mFodCircleVisible = true;
+    color_mode = std::stoi(android::base::GetProperty("persist.vendor.sys.color_mode", "0"));
+    this->mVendorDisplayService->setMode(16, 0);
+    this->mVendorDisplayService->setMode(17, 0);
+    this->mVendorDisplayService->setMode(18, 0);
+    this->mVendorDisplayService->setMode(20, 0);
+    this->mVendorDisplayService->setMode(21, 0);
+    this->mVendorDisplayService->setMode(17, 1);
     this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 1);
 
     return Void();
@@ -99,6 +111,12 @@ Return<void> FingerprintInscreen::onShowFODView() {
 
 Return<void> FingerprintInscreen::onHideFODView() {
     this->mFodCircleVisible = false;
+    this->mVendorDisplayService->setMode(16, 0);
+    this->mVendorDisplayService->setMode(17, 0);
+    this->mVendorDisplayService->setMode(18, 0);
+    this->mVendorDisplayService->setMode(20, 0);
+    this->mVendorDisplayService->setMode(21, 0);
+    this->mVendorDisplayService->setMode(color_mode > 0 ? color_mode : 17, color_mode > 0 ? 1 : 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_AOD_MODE, 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_SET_DIM, 0);
     this->mVendorDisplayService->setMode(OP_DISPLAY_NOTIFY_PRESS, 0);

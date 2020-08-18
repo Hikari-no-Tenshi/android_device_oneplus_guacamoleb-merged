@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.text.TextUtils;
 import androidx.preference.PreferenceManager;
@@ -46,6 +47,7 @@ public class Startup extends BroadcastReceiver {
             Utils.setDisplayMode(20, 0);
             Utils.setDisplayMode(21, 0);
             Utils.setDisplayMode(20, 1);
+            SystemProperties.set("persist.vendor.sys.color_mode", "20");
         }
 
         enabled = sharedPrefs.getBoolean(DeviceSettings.KEY_HBM_SWITCH, false);
@@ -69,6 +71,7 @@ public class Startup extends BroadcastReceiver {
             Utils.setDisplayMode(20, 0);
             Utils.setDisplayMode(21, 0);
             Utils.setDisplayMode(21, 1);
+            SystemProperties.set("persist.vendor.sys.color_mode", "21");
         }
 
         Utils.enableService(context);

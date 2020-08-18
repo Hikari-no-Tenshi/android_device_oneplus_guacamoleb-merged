@@ -19,6 +19,7 @@ package org.lineageos.device.DeviceSettings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.SystemProperties;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceManager;
@@ -51,6 +52,7 @@ public class SRGBModeSwitch implements OnPreferenceChangeListener {
         Utils.setDisplayMode(20, 0);
         Utils.setDisplayMode(21, 0);
         Utils.setDisplayMode(20, enabled ? 1 : 0);
+        SystemProperties.set("persist.vendor.sys.color_mode", "20");
         return true;
     }
 }

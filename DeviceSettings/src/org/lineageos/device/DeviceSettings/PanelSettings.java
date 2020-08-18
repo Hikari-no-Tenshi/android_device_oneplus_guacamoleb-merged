@@ -23,6 +23,7 @@ import android.content.res.Resources;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -81,6 +82,7 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
             Utils.setDisplayMode(20, 0);
             Utils.setDisplayMode(21, 0);
             Utils.setDisplayMode(20, 1);
+            SystemProperties.set("persist.vendor.sys.color_mode", "20");
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, true);
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         } else if (checkedId == R.id.dci_mode) {
@@ -90,6 +92,7 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
             Utils.setDisplayMode(20, 0);
             Utils.setDisplayMode(21, 0);
             Utils.setDisplayMode(21, 1);
+            SystemProperties.set("persist.vendor.sys.color_mode", "21");
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, true);
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
         } else if (checkedId == R.id.off_mode) {
@@ -98,6 +101,7 @@ public class PanelSettings extends PreferenceFragment implements RadioGroup.OnCh
             Utils.setDisplayMode(18, 0);
             Utils.setDisplayMode(20, 0);
             Utils.setDisplayMode(21, 0);
+            SystemProperties.set("persist.vendor.sys.color_mode", "0");
             edit.putBoolean(DeviceSettings.KEY_SRGB_SWITCH, false);
             edit.putBoolean(DeviceSettings.KEY_DCI_SWITCH, false);
         }
