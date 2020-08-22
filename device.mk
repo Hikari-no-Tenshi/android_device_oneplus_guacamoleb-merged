@@ -12,6 +12,8 @@ $(call inherit-product-if-exists, vendor/google/customization/config.mk)
 # Get non-open-source specific aspects
 $(call inherit-product-if-exists, vendor/oneplus/guacamoleb/guacamoleb-vendor.mk)
 
+#GAPPS_VARIANT := nano
+
 # Additional native libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
@@ -541,3 +543,5 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
+
+#$(call inherit-product, vendor/opengapps/build/opengapps-packages.mk)
