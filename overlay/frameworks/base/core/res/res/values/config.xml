@@ -23,6 +23,9 @@
          Software implementation will be used if config_hardware_auto_brightness_available is not set -->
     <bool name="config_automatic_brightness_available">true</bool>
 
+    <!-- Allow automatic adjusting of the screen brightness while dozing in low power state. -->
+    <bool name="config_allowAutoBrightnessWhileDozing">true</bool>
+
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          USB interfaces.  If the device doesn't want to support tething over USB this should
          be empty.  An example would be "usb.*" -->
