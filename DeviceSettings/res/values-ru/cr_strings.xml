@@ -15,7 +15,7 @@
     <string name="device_title">Настройки OnePlus</string>
     <string name="device_summary">Отрегулируйте настройки устройства OnePlus</string>
     <!-- Display modes -->
-    <string name="display_title">Режимы экрана</string>
+    <string name="display_title">Режим экрана</string>
     <string name="display_summary">Настройки и параметры экрана</string>
     <string name="srgb_mode_summary"></string>
     <string name="srgb_mode_title">Режим sRGB</string>
@@ -29,12 +29,13 @@
     <string name="oneplus_mode_title">Режим OnePlus</string>
     <string name="dci_mode_summary"></string>
     <string name="dci_mode_title">Режим широкой цветовой гаммы DCI-P3</string>
-    <string name="panel_category_title">Режим панелей</string>
-    <string name="panel_category_summary">Режимы для цветовой коррекции панелей</string>
+    <string name="panel_category_title">Режим экрана</string>
+    <string name="panel_category_summary">Режимы для цветовой коррекции экрана</string>
     <string name="off_mode_title">Выкл</string>
-    <string name="tile_panel_mode">Режим панелей</string>
+    <string name="tile_panel_mode">Режим экрана</string>
     <string name="tile_hbm_mode">Режимы высокой яркости</string>
     <string name="tile_dc_mode">DC-Dimming</string>
+    <string name="panel_mode_info">Выключение режима экрана требует перезагрузки.</string>
     <!-- Notification slider -->
     <string name="notification_slider_category_title">Слайдер уведомлений</string>
     <string name="notification_slider_selection_dialog_title">Действие</string>
