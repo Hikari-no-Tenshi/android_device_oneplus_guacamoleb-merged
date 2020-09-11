@@ -71,3 +71,12 @@ get_prop(hal_sensors_default, powerctl_prop)
 
 # Allow hal_sensors_default to read and write to sysfs nodes
 allow hal_sensors_default sysfs:file { read write getattr open };
+
+# Allow hal_sensors_default to write to property_socket
+allow hal_sensors_default property_socket:sock_file write;
+
+# Allow hal_sensors_default to connect to init:unix_stream_socket
+allow hal_sensors_default init:unix_stream_socket connectto;
+
+# Allow hal_sensors_default to read and write to diag_device
+allow hal_sensors_default diag_device:chr_file { ioctl read write getattr open };
