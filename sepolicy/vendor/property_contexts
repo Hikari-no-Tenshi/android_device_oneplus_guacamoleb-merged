@@ -48,3 +48,6 @@ persist.vendor.sensors.light.location_y          u:object_r:vendor_sensors_prop:
 persist.vendor.sensors.proximity.using_motion    u:object_r:vendor_sensors_prop:s0
 sys.night_mode.enabled                           u:object_r:powerctl_prop:s0
 sys.night_mode.color_temperature                 u:object_r:powerctl_prop:s0
+
+# CNE IWLAN Logging
+persist.vendor.iwlan.logging.logcat          u:object_r:cnd_prop:s0
