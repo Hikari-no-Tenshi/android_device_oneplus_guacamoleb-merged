@@ -1,0 +1,2 @@
+# Allow hal_tetheroffload_default to read and write to diag_device
+allow hal_tetheroffload_default diag_device:chr_file { ioctl read write getattr open };
