@@ -1,0 +1,2 @@
+# Allow hal_imsrtp to read and write to diag_device
+allow hal_imsrtp diag_device:chr_file { ioctl read write getattr open };

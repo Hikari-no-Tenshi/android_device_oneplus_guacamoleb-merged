@@ -1,0 +1,2 @@
+# Allow qti to read and write to diag_device
+allow qti diag_device:chr_file { ioctl read write getattr open };

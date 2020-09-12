@@ -1,0 +1,2 @@
+# Allow cnd to read and write to diag_device
+allow cnd diag_device:chr_file { ioctl read write getattr open };

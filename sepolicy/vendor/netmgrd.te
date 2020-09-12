@@ -1,0 +1,2 @@
+# Allow netmgrd to read and write to diag_device
+allow netmgrd diag_device:chr_file { ioctl read write getattr open };
