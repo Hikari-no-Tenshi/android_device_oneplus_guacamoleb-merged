@@ -14,3 +14,6 @@ hal_client_domain(system_app, hal_pasrmanager)
 
 allow system_app hal_display_hwservice:hwservice_manager find;
 binder_call(system_app, hal_display_default)
+
+typeattribute system_app hal_fingerprint_client;
+allow system_app hal_fingerprint_hwservice:hwservice_manager find;
