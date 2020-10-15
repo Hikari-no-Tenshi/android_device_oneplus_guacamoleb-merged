@@ -32,6 +32,7 @@
 
 #include <android-base/properties.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
+#include <sys/sysinfo.h>
 #include <sys/_system_properties.h>
 
 #include "property_service.h"
@@ -54,6 +55,41 @@ void property_override_dual(char const system_prop[],
 {
     property_override(system_prop, value);
     property_override(vendor_prop, value);
+}
+
+void property_override_multi(char const system_prop[],
+    char const vendor_prop[], char const bootimage_prop[], char const value[])
+{
+    property_override(system_prop, value);
+    property_override(vendor_prop, value);
+    property_override(bootimage_prop, value);
+}
+
+void load_dalvikvm_properties()
+{
+    struct sysinfo sys;
+    sysinfo(&sys);
+    if (sys.totalram > 8192ull * 1024 * 1024) {
+        // from - phone-xhdpi-12288-dalvik-heap.mk
+        property_override("dalvik.vm.heapstartsize", "24m");
+        property_override("dalvik.vm.heapgrowthlimit", "384m");
+        property_override("dalvik.vm.heaptargetutilization", "0.42");
+        property_override("dalvik.vm.heapmaxfree", "56m");
+    } else if (sys.totalram > 6144ull * 1024 * 1024) {
+        // from - phone-xhdpi-8192-dalvik-heap.mk
+        property_override("dalvik.vm.heapstartsize", "24m");
+        property_override("dalvik.vm.heapgrowthlimit", "256m");
+        property_override("dalvik.vm.heaptargetutilization", "0.46");
+        property_override("dalvik.vm.heapmaxfree", "48m");
+    } else {
+        // from - phone-xhdpi-6144-dalvik-heap.mk
+        property_override("dalvik.vm.heapstartsize", "16m");
+        property_override("dalvik.vm.heapgrowthlimit", "256m");
+        property_override("dalvik.vm.heaptargetutilization", "0.5");
+        property_override("dalvik.vm.heapmaxfree", "32m");
+    }
+    property_override("dalvik.vm.heapsize", "512m");
+    property_override("dalvik.vm.heapminfree", "8m");
 }
 
 void vendor_load_properties()
@@ -116,4 +152,7 @@ void vendor_load_properties()
     property_override("ro.build.product", "OnePlus7");
     property_override("ro.build.real_device", "true");
     property_override("ro.build.release_type", "release");
+
+    // dalvikvm props
+    load_dalvikvm_properties();
 }
