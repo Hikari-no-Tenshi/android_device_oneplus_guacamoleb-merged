@@ -1696,7 +1696,6 @@ vendor/lib64/libwigig_flashaccess.so
 vendor/lib64/libwigig_pciaccess.so
 vendor/lib64/libwigig_utils.so
 vendor/lib64/libwigigsensing.so
-vendor/lib64/vendor.qti.hardware.wifi.keystore@1.0.so
 vendor/lib64/vendor.qti.hardware.wifi.wifilearner@1.0.so
 vendor/lib64/vendor.qti.hardware.wigig.netperftuner@1.0.so
 vendor/lib64/vendor.qti.hardware.wigig.supptunnel@1.0.so
