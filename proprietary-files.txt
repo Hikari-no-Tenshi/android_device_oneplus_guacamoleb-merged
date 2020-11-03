@@ -592,7 +592,7 @@ vendor/lib64/vendor.display.color@1.2.so
 vendor/lib64/vendor.display.postproc@1.0.so
 
 # Dolby
--app/OPSoundTuner/OPSoundTuner.apk|447e8789e8d93a85cd0506c4ccd691a4c50481e0
+-app/OPSoundTuner/OPSoundTuner.apk|00d96683361ced517e9fbed807753349b258060e
 -priv-app/daxService/daxService.apk
 etc/permissions/com.dolby.daxservice.xml
 
@@ -1090,7 +1090,7 @@ vendor/etc/init/android.hardware.neuralnetworks@1.2-service-qti.rc
 vendor/lib64/libhexagon_nn_stub.so
 
 # NFC
--app/NxpNfcNci/NxpNfcNci.apk|5e42ea2d06713844b6aced94dab5c0e622b32d05
+-app/NxpNfcNci/NxpNfcNci.apk|7fe62a6c71589d9fa8056dc41a0a4613d9e10331
 -app/NxpSecureElement/NxpSecureElement.apk
 etc/nfcee_access.xml
 etc/permissions/com.nxp.nfc.xml
