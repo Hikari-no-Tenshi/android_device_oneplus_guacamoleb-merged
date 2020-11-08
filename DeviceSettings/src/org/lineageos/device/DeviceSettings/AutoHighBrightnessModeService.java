@@ -39,6 +39,7 @@ public class AutoHighBrightnessModeService extends Service {
 
     private static boolean mAutoHBMSensorEnabled = false;
     private static boolean mAutoHBMActive = false;
+    private static boolean mIsGoingToSleep = false;
     private boolean mIsAutomaticBrightnessEnabled;
     private Handler mHandler;
 
@@ -81,6 +82,7 @@ public class AutoHighBrightnessModeService extends Service {
     public void deactivateLightSensorRead() {
         mSensorManager.unregisterListener(mSensorEventListener);
         mAutoHBMSensorEnabled = false;
+        mIsGoingToSleep = false;
     }
 
     SensorEventListener mSensorEventListener = new SensorEventListener() {
@@ -88,7 +90,7 @@ public class AutoHighBrightnessModeService extends Service {
         public void onSensorChanged(SensorEvent event) {
             if (mAutoHBMSensorEnabled) {
                 float lux = event.values[0];
-                if (lux > 6500.0f) {
+                if (lux > 6500.0f && !mIsGoingToSleep) {
                     Utils.writeValue(HBM_BRIGHTNESS_FILE, String.valueOf((int)getHBMBrightness(lux)));
                     mAutoHBMActive = true;
                 } else if (lux < 6500.0f && mAutoHBMActive && !mIsAutomaticBrightnessEnabled) {
@@ -115,6 +117,11 @@ public class AutoHighBrightnessModeService extends Service {
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 deactivateLightSensorRead();
             }
+
+            if (intent.getAction().equals(
+                    com.android.internal.util.crdroid.content.Intent.ACTION_GO_TO_SLEEP)) {
+                mIsGoingToSleep = true;
+            }
         }
     };
 
@@ -123,6 +130,8 @@ public class AutoHighBrightnessModeService extends Service {
         mHandler = new Handler(Looper.getMainLooper());
         IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        screenStateFilter.addAction(
+                com.android.internal.util.crdroid.content.Intent.ACTION_GO_TO_SLEEP);
         registerReceiver(mScreenStateReceiver, screenStateFilter);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mCustomSettingsObserver.observe();
