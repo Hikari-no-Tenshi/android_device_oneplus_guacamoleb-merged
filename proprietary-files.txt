@@ -709,6 +709,9 @@ vendor/lib/vendor.qti.esepowermanager@1.0.so
 vendor/lib64/hw/vendor.qti.esepowermanager@1.0-impl.so
 vendor/lib64/vendor.qti.esepowermanager@1.0.so
 
+# Features
+etc/feature_list
+
 # Fingerprint
 -vendor/app/QFingerprintService/QFingerprintService.apk
 vendor/bin/qfp-daemon
@@ -1090,7 +1093,7 @@ vendor/etc/init/android.hardware.neuralnetworks@1.2-service-qti.rc
 vendor/lib64/libhexagon_nn_stub.so
 
 # NFC
--app/NxpNfcNci/NxpNfcNci.apk|3126d43bbd6602e9ee3d8b0ce4f0cf3202f6a2ee
+-app/NxpNfcNci/NxpNfcNci.apk
 -app/NxpSecureElement/NxpSecureElement.apk
 etc/nfcee_access.xml
 etc/permissions/com.nxp.nfc.xml
@@ -1372,7 +1375,7 @@ product/framework/qti-telephony-common.jar|b4d187700f279cdbd40e74b4c3be4504f10d8
 
 # Radio - IMS
 -product/app/uceShimService/uceShimService.apk
--product/priv-app/ims/ims.apk|bf0821db0fe9013d1f89be13c5cad561724d9a5b
+-product/priv-app/ims/ims.apk
 product/etc/permissions/com.qualcomm.qti.imscmservice-V2.0-java.xml
 product/etc/permissions/com.qualcomm.qti.imscmservice-V2.1-java.xml
 product/etc/permissions/com.qualcomm.qti.imscmservice-V2.2-java.xml
