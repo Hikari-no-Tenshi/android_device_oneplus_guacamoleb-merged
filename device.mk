@@ -14,6 +14,9 @@ $(call inherit-product-if-exists, vendor/oneplus/guacamoleb/guacamoleb-vendor.mk
 
 #GAPPS_VARIANT := nano
 
+# Translations
+$(call inherit-product-if-exists, vendor/translations/config.mk)
+
 # Additional native libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
