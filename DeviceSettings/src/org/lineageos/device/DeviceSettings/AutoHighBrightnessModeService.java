@@ -24,17 +24,17 @@ public class AutoHighBrightnessModeService extends Service {
     private static final String HBM_FILE = "/sys/devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DSI-1/hbm";
 
     private final int[][] HBM_AUTOBRIGHTNESS_ARRAY = {
-        new int[]{6500, 10},
-        new int[]{7000, 40},
-        new int[]{7500, 70},
-        new int[]{8000, 100},
-        new int[]{8500, 150},
-        new int[]{9000, 200},
-        new int[]{9500, 300},
-        new int[]{10000, 400},
-        new int[]{10500, 600},
-        new int[]{11000, 800},
-        new int[]{12000, 1023},
+        new int[]{20000, 10},
+        new int[]{23000, 40},
+        new int[]{26000, 70},
+        new int[]{29000, 100},
+        new int[]{32000, 150},
+        new int[]{35000, 200},
+        new int[]{38000, 300},
+        new int[]{41000, 400},
+        new int[]{44000, 600},
+        new int[]{47000, 800},
+        new int[]{50000, 1023},
     };
 
     private static boolean mAutoHBMSensorEnabled = false;
