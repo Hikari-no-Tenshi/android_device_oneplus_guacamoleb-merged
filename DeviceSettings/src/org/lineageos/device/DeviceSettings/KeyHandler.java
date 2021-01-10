@@ -24,6 +24,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.hardware.Sensor;
@@ -159,6 +160,9 @@ public class KeyHandler implements DeviceKeyHandler {
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.NIGHT_DISPLAY_COLOR_TEMPERATURE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.UI_NIGHT_MODE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -169,12 +173,16 @@ public class KeyHandler implements DeviceKeyHandler {
             } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.NIGHT_DISPLAY_COLOR_TEMPERATURE))) {
                 updateNightModeColorTemperature();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.UI_NIGHT_MODE))) {
+                updateNightMode();
             }
         }
 
         public void update() {
             updateNightModeStatus();
             updateNightModeColorTemperature();
+            updateNightMode();
         }
     }
 
@@ -193,6 +201,21 @@ public class KeyHandler implements DeviceKeyHandler {
                 resources.getInteger(com.android.internal.R.integer.config_nightDisplayColorTemperatureDefault),
                 UserHandle.USER_CURRENT);
         SystemProperties.set(NIGHT_MODE_COLOR_TEMPERATURE_PROP, String.valueOf(colorTemperature));
+    }
+
+    private void updateNightMode() {
+        int currentNightMode = mContext.getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.OEM_BLACK_MODE, 0, UserHandle.USER_CURRENT);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.OEM_BLACK_MODE, 1, UserHandle.USER_CURRENT);
+                break;
+        }
     }
 
     private boolean hasSetupCompleted() {
