@@ -22,8 +22,13 @@ import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.UEventObserver;
 import android.os.UserHandle;
 import android.os.Vibrator;
@@ -55,11 +60,13 @@ public class KeyHandler extends Service {
     private NotificationManager mNotificationManager;
     private AudioManager mAudioManager;
     private Vibrator mVibrator;
+    private Handler mHandler;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        mHandler = new Handler(Looper.getMainLooper());
         mNotificationManager = getSystemService(NotificationManager.class);
         mAudioManager = getSystemService(AudioManager.class);
         mVibrator = getSystemService(Vibrator.class);
@@ -67,6 +74,9 @@ public class KeyHandler extends Service {
             mVibrator = null;
         }
         alertSliderEventObserver.startObserving("DEVPATH=/devices/platform/soc/soc:tri_state_key");
+
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
     }
 
     @Override
@@ -145,5 +155,47 @@ public class KeyHandler extends Service {
             return;
         }
         mVibrator.vibrate(50);
+    }
+
+    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private class CustomSettingsObserver extends ContentObserver {
+
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = getApplicationContext().getContentResolver();
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.UI_NIGHT_MODE),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.UI_NIGHT_MODE))) {
+                updateNightMode();
+            }
+        }
+
+        public void update() {
+            updateNightMode();
+        }
+    }
+
+    private void updateNightMode() {
+        int currentNightMode = getApplicationContext().getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+        switch (currentNightMode) {
+            case Configuration.UI_MODE_NIGHT_NO:
+                Settings.System.putIntForUser(getApplicationContext().getContentResolver(),
+                        Settings.System.OEM_BLACK_MODE, 0, UserHandle.USER_CURRENT);
+                break;
+            case Configuration.UI_MODE_NIGHT_YES:
+                Settings.System.putIntForUser(getApplicationContext().getContentResolver(),
+                        Settings.System.OEM_BLACK_MODE, 1, UserHandle.USER_CURRENT);
+                break;
+        }
     }
 }
