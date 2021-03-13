@@ -83,6 +83,7 @@
         <boolean name="carrier_default_wfc_ims_enabled_bool" value="true" />
         <int name="wfc_spn_format_idx_int" value="11" />
         <string name="default_vm_number_string">+306971000123</string>
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="202" mnc="02" />
     <carrier_config mcc="204" mnc="02" />
@@ -145,12 +146,14 @@
         <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
         <boolean name="vendor_hide_wfc_preference_ui" value="true" />
         <boolean name="display_hd_audio_property_bool" value="false" />
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="204" mnc="20">
         <boolean name="carrier_volte_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
         <int name="carrier_default_wfc_ims_mode_int" value="1" />
         <int name="carrier_default_wfc_ims_roaming_mode_int" value="1" />
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="206" mnc="01">
         <boolean name="carrier_volte_available_bool" value="true" />
@@ -207,12 +210,15 @@
         <int name="wfc_spn_format_idx_int" value="8" />
         <string name="default_vm_number_string">+36309888444</string>
         <boolean name="display_hd_audio_property_bool" value="false" />
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="216" mnc="70">
         <boolean name="carrier_volte_available_bool" value="true" />
         <boolean name="vendor_hide_volte_settng_ui" value="true" />
     </carrier_config>
-    <carrier_config mcc="219" mnc="01" />
+    <carrier_config mcc="219" mnc="01">
+        <string name="carrier_name_string">DT</string>
+    </carrier_config>
     <carrier_config mcc="222" mnc="01">
         <boolean name="carrier_volte_available_bool" value="true" />
         <boolean name="editable_wfc_mode_bool" value="false" />
@@ -236,11 +242,13 @@
         <int name="wfc_spn_format_idx_int" value="4" />
         <string name="default_vm_number_string">+420603123311</string>
         <boolean name="display_hd_audio_property_bool" value="false" />
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="230" mnc="03" />
     <carrier_config mcc="230" mnc="99" />
     <carrier_config mcc="231" mnc="02">
         <boolean name="carrier_volte_available_bool" value="true" />
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="232" mnc="03">
         <boolean name="carrier_volte_available_bool" value="true" />
@@ -450,6 +458,7 @@
         <int name="wfc_spn_format_idx_int" value="4" />
         <string name="default_vm_number_string">+48602950000</string>
         <boolean name="display_hd_audio_property_bool" value="false" />
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="260" mnc="03" />
     <carrier_config mcc="260" mnc="05" />
@@ -471,6 +480,7 @@
         <int name="wfc_spn_format_idx_int" value="2" />
         <boolean name="carrier_name_override_bool" value="false" />
         <string name="default_vm_number_string">3311</string>
+        <string name="carrier_name_string">DT</string>
     </carrier_config>
     <carrier_config mcc="262" mnc="06" />
     <carrier_config mcc="262" mnc="02" />
