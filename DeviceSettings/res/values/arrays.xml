@@ -32,4 +32,32 @@
         <item>4</item>
     </string-array>
 
+    <integer-array name="config_HBMBrightnessBacklight">
+        <item>10</item>
+        <item>40</item>
+        <item>70</item>
+        <item>100</item>
+        <item>150</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>600</item>
+        <item>800</item>
+        <item>1023</item>
+    </integer-array>
+
+    <integer-array name="config_HBMautoBrightnessLevels">
+        <item>20000</item>
+        <item>23000</item>
+        <item>26000</item>
+        <item>29000</item>
+        <item>32000</item>
+        <item>35000</item>
+        <item>38000</item>
+        <item>41000</item>
+        <item>44000</item>
+        <item>47000</item>
+        <item>50000</item>
+    </integer-array>
+
 </resources>
