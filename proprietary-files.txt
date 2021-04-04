@@ -955,6 +955,14 @@ vendor/lib/vendor.qti.latency@2.0.so
 vendor/lib64/vendor.qti.hardware.data.latency@1.0.so
 vendor/lib64/vendor.qti.latency@2.0.so
 
+# Light
+vendor/bin/hw/android.hardware.light@2.0-service
+vendor/etc/init/android.hardware.light@2.0-service.rc
+vendor/lib/hw/android.hardware.light@2.0-impl.so
+vendor/lib/hw/lights.msmnile.so
+vendor/lib64/hw/android.hardware.light@2.0-impl.so
+vendor/lib64/hw/lights.msmnile.so
+
 # Listen
 vendor/lib/hw/sound_trigger.primary.msmnile.so
 vendor/lib/libadpcmdec.so

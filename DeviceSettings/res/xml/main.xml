@@ -22,12 +22,6 @@
             android:title="@string/hbm_mode_title" />
 
         <SwitchPreference
-            android:key="hbm_autobrightness"
-            android:summary="@string/hbm_autobrightness_summary"
-            android:icon="@drawable/rr_hbm_icon"
-            android:title="@string/hbm_autobrightness_title" />
-
-        <SwitchPreference
             android:key="dc"
             android:icon="@drawable/rr_dc_dim_icon"
             android:summary="@string/dc_mode_summary"

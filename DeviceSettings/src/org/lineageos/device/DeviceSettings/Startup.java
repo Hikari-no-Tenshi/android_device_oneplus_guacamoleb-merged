@@ -73,8 +73,6 @@ public class Startup extends BroadcastReceiver {
             Utils.setDisplayMode(21, 1);
             SystemProperties.set("persist.vendor.sys.color_mode", "21");
         }
-
-        Utils.enableService(context);
     }
 
     private void restore(String file, boolean enabled) {
