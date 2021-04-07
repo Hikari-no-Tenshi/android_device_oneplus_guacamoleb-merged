@@ -56,18 +56,11 @@ public class AutoHighBrightnessModeService extends Service {
     SensorEventListener mSensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
-            if (mAutoHBMSensorEnabled) {
+            if (mAutoHBMSensorEnabled && mIsAutomaticBrightnessEnabled) {
                 float lux = event.values[0];
-                if (lux > 20000.0f && !mIsGoingToSleep) {
+                if ((lux > 20000.0f && getCurrentBrightness() == 1023) && !mIsGoingToSleep) {
                     int hbm_brightness = Math.round(getHBMBrightness(lux));
                     Utils.writeValue(HBM_BRIGHTNESS_FILE, String.valueOf(hbm_brightness));
-                    mAutoHBMActive = true;
-                } else if (lux < 20000.0f && mAutoHBMActive && !mIsAutomaticBrightnessEnabled) {
-                    Utils.writeValue(HBM_BRIGHTNESS_FILE, "0");
-                    Utils.writeValue(HBM_FILE, "0");
-                    mAutoHBMActive = false;
-                } else {
-                    mAutoHBMActive = false;
                 }
             }
         }
@@ -167,6 +160,11 @@ public class AutoHighBrightnessModeService extends Service {
                 Settings.System.SCREEN_BRIGHTNESS_MODE,
                 Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
                 UserHandle.USER_CURRENT) == 1;
+    }
+
+    private int getCurrentBrightness() {
+        return Integer.valueOf(
+                Utils.getFileValue("/sys/class/backlight/panel0-backlight/brightness", "0"));
     }
 
     private static float[] getFloatArray(TypedArray array) {
