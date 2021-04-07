@@ -48,26 +48,13 @@ static T get(const std::string& path, const T& def) {
     return file.fail() ? def : result;
 }
 
-static int rgbToBrightness(const LightState& state) {
-    int color = state.color & 0x00ffffff;
-    return ((77 * ((color >> 16) & 0x00ff))
-            + (150 * ((color >> 8) & 0x00ff))
-            + (29 * (color & 0x00ff))) >> 8;
-}
-
 Light::Light() {
     mLights.emplace(Type::BACKLIGHT, std::bind(&Light::handleBacklight, this, std::placeholders::_1));
 }
 
 void Light::handleBacklight(const LightState& state) {
-    int maxBrightness = get("/sys/class/backlight/panel0-backlight/max_brightness", -1);
-    if (maxBrightness < 0) {
-        maxBrightness = 255;
-    }
-    int sentBrightness = rgbToBrightness(state);
-    int brightness = sentBrightness * maxBrightness / 255;
-    LOG(DEBUG) << "Writing backlight brightness " << brightness
-               << " (orig " << sentBrightness << ")";
+    int brightness = state.color;
+    LOG(DEBUG) << "Writing backlight brightness " << brightness;
     set("/sys/class/backlight/panel0-backlight/brightness", brightness);
 }
 
