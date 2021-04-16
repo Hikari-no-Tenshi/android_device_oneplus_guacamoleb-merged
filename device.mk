@@ -3,6 +3,9 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
+# Release key
+PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/hnt/release-keys/releasekey
+
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
 
 # Enable updating of APEXes
