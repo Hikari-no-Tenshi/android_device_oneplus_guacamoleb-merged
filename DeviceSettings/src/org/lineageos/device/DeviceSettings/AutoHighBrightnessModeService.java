@@ -36,6 +36,8 @@ public class AutoHighBrightnessModeService extends Service {
     private SensorManager mSensorManager;
     Sensor mLightSensor;
 
+    private Resources mResources;
+
     private float getHBMBrightness(float lux) {
         return mHBMLuxToBacklightSpline.interpolate(lux);
     }
@@ -43,7 +45,9 @@ public class AutoHighBrightnessModeService extends Service {
     public void activateLightSensorRead() {
         mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
         mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        mSensorManager.registerListener(mSensorEventListener, mLightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        int lightSensorRate = mResources.getInteger(
+                com.android.internal.R.integer.config_autoBrightnessLightSensorRate);
+        mSensorManager.registerListener(mSensorEventListener, mLightSensor, lightSensorRate);
         mAutoHBMSensorEnabled = true;
     }
 
@@ -96,9 +100,9 @@ public class AutoHighBrightnessModeService extends Service {
                 com.android.internal.util.crdroid.content.Intent.ACTION_GO_TO_SLEEP);
         registerReceiver(mScreenStateReceiver, screenStateFilter);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        final Resources res = getApplicationContext().getResources();
-        float[] hbm_brightness = getFloatArray(res.obtainTypedArray(R.array.config_HBMBrightnessBacklight));
-        float[] hbm_lux = getFloatArray(res.obtainTypedArray(R.array.config_HBMautoBrightnessLevels));
+        mResources = getApplicationContext().getResources();
+        float[] hbm_brightness = getFloatArray(mResources.obtainTypedArray(R.array.config_HBMBrightnessBacklight));
+        float[] hbm_lux = getFloatArray(mResources.obtainTypedArray(R.array.config_HBMautoBrightnessLevels));
         mHBMLuxToBacklightSpline = Spline.createSpline(hbm_lux, hbm_brightness);
         mCustomSettingsObserver.observe();
         mCustomSettingsObserver.update();
