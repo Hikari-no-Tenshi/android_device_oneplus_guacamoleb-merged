@@ -95,6 +95,9 @@ persist.vendor.display.hal_srgb_mode=native_srgb
 persist.vendor.display.hal_display_p3_mode=native_p3
 persist.vendor.display.hal_saturated_mode=native_p3
 
+# Dolby
+ro.vendor.dolby.dax.version=DAX3_3.6.0.12_r1
+
 # DPM
 persist.vendor.dpmhalservice.enable=1
 

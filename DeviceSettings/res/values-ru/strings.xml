@@ -36,4 +36,8 @@
     <string name="display_title">Экран</string>
     <string name="hbm_autobrightness_title">Автоматический Режим высокой яркости</string>
     <string name="hbm_autobrightness_summary">Включите Адаптивную яркость, чтобы использовать эту опцию</string>
+
+    <!-- Dolby -->
+    <string name="audio_title">Звук</string>
+    <string name="dolby_title">Dolby Atmos</string>
 </resources>
