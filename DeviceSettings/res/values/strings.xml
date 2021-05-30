@@ -36,4 +36,8 @@
     <string name="display_title">Display</string>
     <string name="hbm_autobrightness_title">Automatic High brightness mode</string>
     <string name="hbm_autobrightness_summary">Enable Adaptive brightness to use this option</string>
+
+    <!-- Dolby -->
+    <string name="audio_title">Audio</string>
+    <string name="dolby_title">Dolby Atmos</string>
 </resources>
