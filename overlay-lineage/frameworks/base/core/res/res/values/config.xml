@@ -22,7 +22,7 @@
     <bool name="config_hasDashCharger">true</bool>
 
     <!-- Defines custom OEM sensor for pocket detection. -->
-    <string name="config_pocketJudgeVendorSensorName">oneplus.sensor.pocket</string>
+    <string name="config_pocketJudgeVendorProximitySensorName">oneplus.sensor.infrared.proximity</string>
 
     <!-- Whether device supports sensor based doze customizations -->
     <bool name="config_dozePulsePickup">true</bool>
