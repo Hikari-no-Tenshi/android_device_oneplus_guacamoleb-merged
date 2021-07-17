@@ -17,6 +17,11 @@
 */
 package org.lineageos.device.DeviceSettings;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.RemoteException;
+import android.os.UserHandle;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,6 +30,27 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class Utils {
+    private static boolean mServiceEnabled = false;
+
+    private static void startService(Context context) {
+        context.startServiceAsUser(new Intent(context, AutoHighBrightnessModeService.class),
+                UserHandle.CURRENT);
+        mServiceEnabled = true;
+    }
+
+    private static void stopService(Context context) {
+        mServiceEnabled = false;
+        context.stopServiceAsUser(new Intent(context, AutoHighBrightnessModeService.class),
+                UserHandle.CURRENT);
+    }
+
+    public static void enableService(Context context) {
+        if (DeviceSettings.isHBMAutobrightnessEnabled(context) && !mServiceEnabled) {
+            startService(context);
+        } else if (!DeviceSettings.isHBMAutobrightnessEnabled(context) && mServiceEnabled) {
+            stopService(context);
+        }
+    }
 
     /**
      * Write a string value to the specified file.

@@ -32,4 +32,8 @@
     <string name="quick_settings_log_tile_label">LogTile</string>
     <string name="quick_settings_log_tile_dialog_title">Options</string>
     <string name="cannot_get_su">Action failed because of missing superuser access</string>
+
+    <string name="display_title">Display</string>
+    <string name="hbm_autobrightness_title">Automatic High brightness mode</string>
+    <string name="hbm_autobrightness_summary">Enable Adaptive brightness to use this option</string>
 </resources>

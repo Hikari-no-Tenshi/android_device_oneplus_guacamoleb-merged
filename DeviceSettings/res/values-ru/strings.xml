@@ -32,4 +32,8 @@
     <!-- Log Tile -->
     <string name="quick_settings_log_tile_dialog_title">Опции</string>
     <string name="cannot_get_su">Действие не выполнено из-за отсутствия прав суперпользователя</string>
+
+    <string name="display_title">Экран</string>
+    <string name="hbm_autobrightness_title">Автоматический Режим высокой яркости</string>
+    <string name="hbm_autobrightness_summary">Включите Адаптивную яркость, чтобы использовать эту опцию</string>
 </resources>

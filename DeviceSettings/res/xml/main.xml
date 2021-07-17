@@ -12,6 +12,17 @@
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
+        android:key="display"
+        android:title="@string/display_title">
+
+        <SwitchPreference
+            android:key="hbm_autobrightness"
+            android:summary="@string/hbm_autobrightness_summary"
+            android:icon="@drawable/ic_hbm_icon"
+            android:title="@string/hbm_autobrightness_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="slider"
         android:title="@string/notification_slider_category_title">
 
