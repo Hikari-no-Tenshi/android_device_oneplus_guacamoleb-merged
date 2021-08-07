@@ -21,6 +21,9 @@
     <!-- Whether device has dash charging support -->
     <bool name="config_hasDashCharger">true</bool>
 
+    <!-- Pocket Lock -->
+    <bool name="config_pocketUseLightSensor">false</bool>
+
     <!-- Defines custom OEM sensor for pocket detection. -->
     <string name="config_pocketJudgeVendorProximitySensorName">oneplus.sensor.infrared.proximity</string>
 
