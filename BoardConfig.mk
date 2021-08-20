@@ -37,12 +37,16 @@ BOARD_KERNEL_IMAGE_NAME := Image-dtb
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_SEPARATED_DTBO := true
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+KERNEL_TOOLCHAIN := $(shell pwd)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-gnu/bin
 TARGET_KERNEL_ADDITIONAL_FLAGS := HOSTCFLAGS="-fuse-ld=lld -Wno-unused-command-line-argument"
+TARGET_KERNEL_ADDITIONAL_FLAGS += DTC_EXT=$(shell pwd)/prebuilts/misc/$(HOST_OS)-x86/dtc/dtc
 TARGET_KERNEL_BUILD_HOST := build-machine
 TARGET_KERNEL_BUILD_USER := "Hikari no Tenshi"
 TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_KERNEL_CONFIG := vendor/sm8150-perf_defconfig
-TARGET_KERNEL_SOURCE := kernel/oneplus/sm8150
+TARGET_KERNEL_CONFIG := dora_defconfig
+TARGET_KERNEL_CROSS_COMPILE_ARM32_PREFIX := arm-linux-gnueabi-
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-gnu-
+TARGET_KERNEL_SOURCE := kernel/oneplus/sm8150-dora
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
