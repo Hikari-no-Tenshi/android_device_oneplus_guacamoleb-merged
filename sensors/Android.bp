@@ -64,6 +64,7 @@ cc_binary {
         "libbase",
         "libgui",
         "libui",
+        "libsysutils",
         "libutils",
     ],
     cflags: [
