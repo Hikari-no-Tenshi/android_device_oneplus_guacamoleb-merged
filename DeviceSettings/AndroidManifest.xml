@@ -58,7 +58,11 @@
         </activity>
 
         <activity android:name=".DeviceSettings" />
-        <activity android:name=".KeyHandler" />
+
+        <service
+            android:name=".KeyHandler"
+            android:permission="KeyHandlerService"
+            android:exported="false" />
 
         <receiver android:name="org.lineageos.device.DeviceSettings.Startup" >
             <intent-filter android:priority="100" >

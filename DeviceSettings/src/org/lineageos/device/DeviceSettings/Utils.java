@@ -50,6 +50,7 @@ public class Utils {
         } else if (!DeviceSettings.isHBMAutobrightnessEnabled(context) && mServiceEnabled) {
             stopService(context);
         }
+        context.startService(new Intent(context, KeyHandler.class));
     }
 
     /**

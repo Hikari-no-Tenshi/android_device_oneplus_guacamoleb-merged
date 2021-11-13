@@ -31,6 +31,11 @@ import android.media.AudioManager;
 
 public class Constants {
 
+    // Slider key positions
+    public static final int POSITION_TOP = 0;
+    public static final int POSITION_MIDDLE = 1;
+    public static final int POSITION_BOTTOM = 2;
+
     // Preference keys
     public static final String NOTIF_SLIDER_TOP_KEY = "keycode_top_position";
     public static final String NOTIF_SLIDER_MIDDLE_KEY = "keycode_middle_position";
@@ -69,9 +74,9 @@ public class Constants {
         sStringKeyPreferenceMap.put(NOTIF_SLIDER_MIDDLE_KEY, NOTIF_SLIDER_MIDDLE_PREF);
         sStringKeyPreferenceMap.put(NOTIF_SLIDER_BOTTOM_KEY, NOTIF_SLIDER_BOTTOM_PREF);
 
-        sKeyMap.put(603, NOTIF_SLIDER_TOP_KEY);
-        sKeyMap.put(602, NOTIF_SLIDER_MIDDLE_KEY);
-        sKeyMap.put(601, NOTIF_SLIDER_BOTTOM_KEY);
+        sKeyMap.put(0, NOTIF_SLIDER_TOP_KEY);
+        sKeyMap.put(1, NOTIF_SLIDER_MIDDLE_KEY);
+        sKeyMap.put(2, NOTIF_SLIDER_BOTTOM_KEY);
 
         sKeyDefaultMap.put(NOTIF_SLIDER_TOP_KEY, KEY_VALUE_TOTAL_SILENCE);
         sKeyDefaultMap.put(NOTIF_SLIDER_MIDDLE_KEY, KEY_VALUE_VIBRATE);
