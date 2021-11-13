@@ -64,7 +64,9 @@
             android:permission="KeyHandlerService"
             android:exported="false" />
 
-        <receiver android:name="org.lineageos.device.DeviceSettings.Startup" >
+        <receiver
+            android:name="org.lineageos.device.DeviceSettings.Startup"
+            android:exported="false" >
             <intent-filter android:priority="100" >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -81,7 +83,10 @@
             </intent-filter>
         </service>
 
-        <service android:name="org.lineageos.device.DeviceSettings.AutoHighBrightnessModeService" />
+        <service
+            android:name=".AutoHighBrightnessModeService"
+            android:permission="AutoHighBrightnessModeService"
+            android:exported="false" />
 
         <!-- Search Provider -->
         <provider
