@@ -120,6 +120,11 @@ TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/config.fs
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 ODM_MANIFEST_FILES := $(DEVICE_PATH)/manifest-qva.xml
+ODM_MANIFEST_2_FILES := $(DEVICE_PATH)/manifest_2.xml
+ODM_MANIFEST_2_FILES += $(DEVICE_PATH)/manifest-qva.xml
+ODM_MANIFEST_3_FILES := $(DEVICE_PATH)/manifest_3.xml
+ODM_MANIFEST_3_FILES += $(DEVICE_PATH)/manifest-qva.xml
+ODM_MANIFEST_SKUS += 2 3
 
 # Init
 TARGET_INIT_VENDOR_LIB :=  //$(DEVICE_PATH):libinit_guacamoleb
