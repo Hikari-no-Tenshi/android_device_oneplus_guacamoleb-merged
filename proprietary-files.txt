@@ -14,8 +14,10 @@ vendor/etc/acdbdata/MTP/MTP_workspaceFile.qwsp
 
 # ADSP
 vendor/bin/adsprpcd
+vendor/bin/loadalgo
 vendor/etc/init/vendor.qti.adsprpc-service.rc
 vendor/lib64/libadsp_default_listener.so
+vendor/lib64/libloadalgo_stub.so
 
 # ADSP modules
 vendor/lib/rfsa/adsp/capi_v2_aptX_CLHDAD_Encoder.so
