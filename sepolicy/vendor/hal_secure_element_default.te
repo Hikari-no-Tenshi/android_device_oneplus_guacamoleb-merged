@@ -1,0 +1,5 @@
+# Allow access to the HALs
+hal_client_domain(hal_secure_element_default, hal_nfc)
+
+# Allow hal_secure_element_default access to chr_file
+allow hal_secure_element_default nfc_device:chr_file { ioctl read write getattr lock append map open watch watch_reads };
