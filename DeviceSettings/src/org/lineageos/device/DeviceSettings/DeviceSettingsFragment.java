@@ -1,5 +1,6 @@
 /*
 * Copyright (C) 2016 The OmniROM Project
+* Copyright (C) 2020-2022 crDroid Android Project
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,38 +18,23 @@
 */
 package org.lineageos.device.DeviceSettings;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.util.Log;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 
-public class DeviceSettings extends PreferenceFragment
+public class DeviceSettingsFragment extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
-    public static final String KEY_SETTINGS_PREFIX = "device_setting_";
     public static final String KEY_HBM_AUTOBRIGHTNESS_SWITCH = "hbm_autobrightness";
 
     private ListPreference mTopKeyPref;
@@ -76,7 +62,7 @@ public class DeviceSettings extends PreferenceFragment
         mHBMAutobrightnessSwitch = (TwoStatePreference) findPreference(KEY_HBM_AUTOBRIGHTNESS_SWITCH);
         mHBMAutobrightnessSwitch.setEnabled(isAutomaticBrightnessEnabled);
         mHBMAutobrightnessSwitch.setChecked(PreferenceManager.getDefaultSharedPreferences(
-                getContext()).getBoolean(DeviceSettings.KEY_HBM_AUTOBRIGHTNESS_SWITCH, false));
+                getContext()).getBoolean(DeviceSettingsFragment.KEY_HBM_AUTOBRIGHTNESS_SWITCH, false));
         mHBMAutobrightnessSwitch.setOnPreferenceChangeListener(this);
     }
 
@@ -103,16 +89,16 @@ public class DeviceSettings extends PreferenceFragment
 
     public static boolean isHBMAutobrightnessEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                DeviceSettings.KEY_HBM_AUTOBRIGHTNESS_SWITCH, false);
+                DeviceSettingsFragment.KEY_HBM_AUTOBRIGHTNESS_SWITCH, false);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        // Respond to the action bar's Up/Home button
-        case android.R.id.home:
-            getActivity().finish();
-            return true;
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                getActivity().finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

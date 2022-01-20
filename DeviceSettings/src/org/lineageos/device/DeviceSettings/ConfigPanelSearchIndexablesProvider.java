@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2016 The CyanogenMod Project
  * Copyright (C) 2017 The LineageOS Project
+ * Copyright (C) 2020-2022 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,10 +36,6 @@ import static android.provider.SearchIndexablesContract.NON_INDEXABLES_KEYS_COLU
 
 public class ConfigPanelSearchIndexablesProvider extends SearchIndexablesProvider {
     private static final String TAG = "ConfigPanelSearchIndexablesProvider";
-
-    public static final int SEARCH_IDX_BUTTON_PANEL = 0;
-    public static final int SEARCH_IDX_GESTURE_PANEL = 1;
-    public static final int SEARCH_IDX_OCLICK_PANEL = 2;
 
     private static SearchIndexableResource[] INDEXABLE_RES = new SearchIndexableResource[]{
             new SearchIndexableResource(1, R.xml.main,

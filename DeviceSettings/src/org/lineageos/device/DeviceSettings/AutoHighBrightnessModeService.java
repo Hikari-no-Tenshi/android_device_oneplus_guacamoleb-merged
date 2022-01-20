@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2020-2022 crDroid Android Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.lineageos.device.DeviceSettings;
 
 import android.app.Service;
@@ -23,46 +38,41 @@ import android.provider.Settings;
 import android.util.Spline;
 
 public class AutoHighBrightnessModeService extends Service {
+    private static final String BRIGHTNESS_FILE =
+            "/sys/class/backlight/panel0-backlight/brightness";
     private static final String HBM_BRIGHTNESS_FILE =
             "/sys/devices/platform/soc/ae00000.qcom,mdss_mdp/drm/card0/card0-DSI-1/hbm_brightness";
 
-    private static boolean mAutoHBMSensorEnabled = false;
-    private static boolean mAutoHBMActive = false;
-    private static boolean mIsGoingToSleep = false;
-    private boolean mIsAutomaticBrightnessEnabled;
-    private Handler mHandler;
-    private Spline mHBMLuxToBacklightSpline;
-
     private SensorManager mSensorManager;
-    Sensor mLightSensor;
-
-    private Resources mResources;
+    private PowerManager mPowerManager;
+    private Spline mHBMLuxToBacklightSpline;
+    private boolean mAutoHBMSensorEnabled = false;
+    private boolean mIsAutomaticBrightnessEnabled = false;
+    private int mLightSensorRate = 0;
 
     private float getHBMBrightness(float lux) {
         return mHBMLuxToBacklightSpline.interpolate(lux);
     }
 
-    public void activateLightSensorRead() {
-        mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
-        mLightSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        int lightSensorRate = mResources.getInteger(
-                com.android.internal.R.integer.config_autoBrightnessLightSensorRate);
-        mSensorManager.registerListener(mSensorEventListener, mLightSensor, lightSensorRate);
+    private void activateLightSensorRead() {
+        mSensorManager.registerListener(
+                mSensorEventListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),
+                mLightSensorRate);
         mAutoHBMSensorEnabled = true;
     }
 
-    public void deactivateLightSensorRead() {
+    private void deactivateLightSensorRead() {
         mSensorManager.unregisterListener(mSensorEventListener);
         mAutoHBMSensorEnabled = false;
-        mIsGoingToSleep = false;
     }
 
-    SensorEventListener mSensorEventListener = new SensorEventListener() {
+    private SensorEventListener mSensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (mAutoHBMSensorEnabled && mIsAutomaticBrightnessEnabled) {
                 float lux = event.values[0];
-                if ((lux > 6500.0f && getCurrentBrightness() == 1023) && !mIsGoingToSleep) {
+                if ((lux > 6500.0f && getCurrentBrightness() == 1023) && mPowerManager.isInteractive()) {
                     int hbm_brightness = Math.round(getHBMBrightness(lux));
                     Utils.writeValue(HBM_BRIGHTNESS_FILE, String.valueOf(hbm_brightness));
                 }
@@ -78,37 +88,35 @@ public class AutoHighBrightnessModeService extends Service {
     private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                activateLightSensorRead();
-            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                deactivateLightSensorRead();
-            }
-
-            if (intent.getAction().equals(
-                    com.android.internal.util.crdroid.content.Intent.ACTION_GO_TO_SLEEP)) {
-                mIsGoingToSleep = true;
+            final String action = intent.getAction();
+            switch(action) {
+                case Intent.ACTION_SCREEN_ON:
+                    activateLightSensorRead();
+                    break;
+                case Intent.ACTION_SCREEN_OFF:
+                    deactivateLightSensorRead();
+                    break;
             }
         }
     };
 
     @Override
     public void onCreate() {
-        mHandler = new Handler(Looper.getMainLooper());
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         IntentFilter screenStateFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        screenStateFilter.addAction(
-                com.android.internal.util.crdroid.content.Intent.ACTION_GO_TO_SLEEP);
         registerReceiver(mScreenStateReceiver, screenStateFilter);
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        mResources = getApplicationContext().getResources();
-        float[] hbm_brightness = getFloatArray(mResources.obtainTypedArray(R.array.config_HBMBrightnessBacklight));
-        float[] hbm_lux = getFloatArray(mResources.obtainTypedArray(R.array.config_HBMautoBrightnessLevels));
+        mLightSensorRate = getResources().getInteger(
+                com.android.internal.R.integer.config_autoBrightnessLightSensorRate);
+        float[] hbm_brightness = getFloatArray(
+                getResources().obtainTypedArray(R.array.config_HBMBrightnessBacklight));
+        float[] hbm_lux = getFloatArray(
+                getResources().obtainTypedArray(R.array.config_HBMautoBrightnessLevels));
         mHBMLuxToBacklightSpline = Spline.createSpline(hbm_lux, hbm_brightness);
         mCustomSettingsObserver.observe();
         mCustomSettingsObserver.update();
-        if (pm.isInteractive()) {
-            activateLightSensorRead();
-        }
+        activateLightSensorRead();
     }
 
     @Override
@@ -120,10 +128,7 @@ public class AutoHighBrightnessModeService extends Service {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mScreenStateReceiver);
-        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        if (pm.isInteractive()) {
-            deactivateLightSensorRead();
-        }
+        deactivateLightSensorRead();
     }
 
     @Override
@@ -131,7 +136,8 @@ public class AutoHighBrightnessModeService extends Service {
         return null;
     }
 
-    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private CustomSettingsObserver mCustomSettingsObserver =
+            new CustomSettingsObserver(new Handler(Looper.getMainLooper()));
     private class CustomSettingsObserver extends ContentObserver {
 
         CustomSettingsObserver(Handler handler) {
@@ -167,8 +173,7 @@ public class AutoHighBrightnessModeService extends Service {
     }
 
     private int getCurrentBrightness() {
-        return Integer.valueOf(
-                Utils.getFileValue("/sys/class/backlight/panel0-backlight/brightness", "0"));
+        return Integer.valueOf(Utils.getFileValue(BRIGHTNESS_FILE, "0"));
     }
 
     private static float[] getFloatArray(TypedArray array) {

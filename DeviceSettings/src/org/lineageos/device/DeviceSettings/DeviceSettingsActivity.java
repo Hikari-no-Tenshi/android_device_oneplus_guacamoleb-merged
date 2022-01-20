@@ -1,5 +1,6 @@
 /*
 * Copyright (C) 2017 The OmniROM Project
+* Copyright (C) 2020-2022 crDroid Android Project
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -17,49 +18,17 @@
 */
 package org.lineageos.device.DeviceSettings;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.content.DialogInterface;
+import android.R;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import androidx.preference.PreferenceFragment;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceActivity;
 
-public class DeviceSettingsActivity extends Activity {
-
-    private DeviceSettings mDeviceSettingsFragment;
-
+public class DeviceSettingsActivity extends PreferenceActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Fragment fragment = getFragmentManager().findFragmentById(android.R.id.content);
-        if (fragment == null) {
-            mDeviceSettingsFragment = new DeviceSettings();
-            getFragmentManager().beginTransaction()
-                .add(android.R.id.content, mDeviceSettingsFragment)
-                .commit();
-        } else {
-            mDeviceSettingsFragment = (DeviceSettings) fragment;
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-            finish();
-            return true;
-        default:
-            break;
-        }
-        return super.onOptionsItemSelected(item);
+        getFragmentManager().beginTransaction().replace(
+            R.id.content,
+            new DeviceSettingsFragment()
+        ).commit();
     }
 }

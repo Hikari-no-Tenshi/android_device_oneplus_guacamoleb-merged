@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2015 The CyanogenMod Project
  * Copyright (C) 2017 The LineageOS Project
+ * Copyright (C) 2020-2022 crDroid Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +18,12 @@
 
 package org.lineageos.device.DeviceSettings;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.UserHandle;
 import android.provider.Settings;
-import androidx.preference.SwitchPreference;
-import androidx.preference.PreferenceManager;
 
-import android.media.AudioManager;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Constants {
 

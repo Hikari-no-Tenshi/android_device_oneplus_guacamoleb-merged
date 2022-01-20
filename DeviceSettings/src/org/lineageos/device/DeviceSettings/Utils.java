@@ -1,5 +1,6 @@
 /*
 * Copyright (C) 2013 The OmniROM Project
+* Copyright (C) 2020-2022 crDroid Android Project
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -45,9 +46,9 @@ public class Utils {
     }
 
     public static void enableService(Context context) {
-        if (DeviceSettings.isHBMAutobrightnessEnabled(context) && !mServiceEnabled) {
+        if (DeviceSettingsFragment.isHBMAutobrightnessEnabled(context) && !mServiceEnabled) {
             startService(context);
-        } else if (!DeviceSettings.isHBMAutobrightnessEnabled(context) && mServiceEnabled) {
+        } else if (!DeviceSettingsFragment.isHBMAutobrightnessEnabled(context) && mServiceEnabled) {
             stopService(context);
         }
         context.startService(new Intent(context, KeyHandler.class));
