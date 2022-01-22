@@ -39,6 +39,10 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard.flags"],
     },
+
+    required: [
+        "privapp_whitelist_org.lineageos.device.DeviceSettings"
+    ],
 }
 
 sh_binary {
@@ -46,4 +50,12 @@ sh_binary {
     init_rc: ["tri-state-key-calibrate.rc"],
     src: "tri-state-key-calibrate.sh",
     vendor: true,
+}
+
+prebuilt_etc {
+    name: "privapp_whitelist_org.lineageos.device.DeviceSettings",
+    system_ext_specific: true,
+    sub_dir: "permissions",
+    src: "privapp_whitelist_org.lineageos.device.DeviceSettings.xml",
+    filename_from_src: true,
 }

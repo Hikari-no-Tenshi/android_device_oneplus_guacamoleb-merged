@@ -18,18 +18,15 @@
 */
 package org.lineageos.device.DeviceSettings;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.MenuItem;
-import android.view.View;
-import androidx.preference.PreferenceFragment;
-import androidx.preference.SwitchPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceManager;
 import androidx.preference.TwoStatePreference;
 
@@ -40,30 +37,37 @@ public class DeviceSettingsFragment extends PreferenceFragment
     private ListPreference mTopKeyPref;
     private ListPreference mMiddleKeyPref;
     private ListPreference mBottomKeyPref;
-    private static TwoStatePreference mHBMAutobrightnessSwitch;
+    private TwoStatePreference mHBMAutobrightnessSwitch;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.main);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mTopKeyPref = (ListPreference) findPreference(Constants.NOTIF_SLIDER_TOP_KEY);
-        mTopKeyPref.setValueIndex(Constants.getPreferenceInt(getContext(), Constants.NOTIF_SLIDER_TOP_KEY));
-        mTopKeyPref.setOnPreferenceChangeListener(this);
-        mMiddleKeyPref = (ListPreference) findPreference(Constants.NOTIF_SLIDER_MIDDLE_KEY);
-        mMiddleKeyPref.setValueIndex(Constants.getPreferenceInt(getContext(), Constants.NOTIF_SLIDER_MIDDLE_KEY));
-        mMiddleKeyPref.setOnPreferenceChangeListener(this);
-        mBottomKeyPref = (ListPreference) findPreference(Constants.NOTIF_SLIDER_BOTTOM_KEY);
-        mBottomKeyPref.setValueIndex(Constants.getPreferenceInt(getContext(), Constants.NOTIF_SLIDER_BOTTOM_KEY));
-        mBottomKeyPref.setOnPreferenceChangeListener(this);
-
+        mTopKeyPref = findPreference(Constants.NOTIF_SLIDER_TOP_KEY);
+        if (mTopKeyPref != null) {
+            mTopKeyPref.setValueIndex(Constants.getPreferenceInt(getContext(), Constants.NOTIF_SLIDER_TOP_KEY));
+            mTopKeyPref.setOnPreferenceChangeListener(this);
+        }
+        mMiddleKeyPref = findPreference(Constants.NOTIF_SLIDER_MIDDLE_KEY);
+        if (mMiddleKeyPref != null) {
+            mMiddleKeyPref.setValueIndex(Constants.getPreferenceInt(getContext(), Constants.NOTIF_SLIDER_MIDDLE_KEY));
+            mMiddleKeyPref.setOnPreferenceChangeListener(this);
+        }
+        mBottomKeyPref = findPreference(Constants.NOTIF_SLIDER_BOTTOM_KEY);
+        if (mBottomKeyPref != null) {
+            mBottomKeyPref.setValueIndex(Constants.getPreferenceInt(getContext(), Constants.NOTIF_SLIDER_BOTTOM_KEY));
+            mBottomKeyPref.setOnPreferenceChangeListener(this);
+        }
         boolean isAutomaticBrightnessEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL, UserHandle.USER_CURRENT) == 1;
-        mHBMAutobrightnessSwitch = (TwoStatePreference) findPreference(KEY_HBM_AUTOBRIGHTNESS_SWITCH);
-        mHBMAutobrightnessSwitch.setEnabled(isAutomaticBrightnessEnabled);
-        mHBMAutobrightnessSwitch.setChecked(PreferenceManager.getDefaultSharedPreferences(
-                getContext()).getBoolean(DeviceSettingsFragment.KEY_HBM_AUTOBRIGHTNESS_SWITCH, false));
-        mHBMAutobrightnessSwitch.setOnPreferenceChangeListener(this);
+        mHBMAutobrightnessSwitch = findPreference(KEY_HBM_AUTOBRIGHTNESS_SWITCH);
+        if (mHBMAutobrightnessSwitch != null) {
+            mHBMAutobrightnessSwitch.setEnabled(isAutomaticBrightnessEnabled);
+            mHBMAutobrightnessSwitch.setChecked(PreferenceManager.getDefaultSharedPreferences(
+                    getContext()).getBoolean(DeviceSettingsFragment.KEY_HBM_AUTOBRIGHTNESS_SWITCH, false));
+            mHBMAutobrightnessSwitch.setOnPreferenceChangeListener(this);
+        }
     }
 
     @Override
@@ -94,11 +98,10 @@ public class DeviceSettingsFragment extends PreferenceFragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                getActivity().finish();
-                return true;
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            getActivity().finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

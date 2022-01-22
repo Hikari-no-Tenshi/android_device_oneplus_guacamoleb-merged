@@ -37,7 +37,7 @@ import static android.provider.SearchIndexablesContract.NON_INDEXABLES_KEYS_COLU
 public class ConfigPanelSearchIndexablesProvider extends SearchIndexablesProvider {
     private static final String TAG = "ConfigPanelSearchIndexablesProvider";
 
-    private static SearchIndexableResource[] INDEXABLE_RES = new SearchIndexableResource[]{
+    private static final SearchIndexableResource[] INDEXABLE_RES = new SearchIndexableResource[]{
             new SearchIndexableResource(1, R.xml.main,
                     DeviceSettingsActivity.class.getName(),
                     R.drawable.ic_settings_device),
@@ -51,6 +51,9 @@ public class ConfigPanelSearchIndexablesProvider extends SearchIndexablesProvide
     @Override
     public Cursor queryXmlResources(String[] projection) {
         MatrixCursor cursor = new MatrixCursor(INDEXABLES_XML_RES_COLUMNS);
+        for (SearchIndexableResource indexableRe : INDEXABLE_RES) {
+            cursor.addRow(generateResourceRef(indexableRe));
+        }
         return cursor;
     }
 

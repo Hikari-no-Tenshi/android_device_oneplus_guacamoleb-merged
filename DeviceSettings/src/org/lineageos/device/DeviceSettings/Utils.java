@@ -20,11 +20,9 @@ package org.lineageos.device.DeviceSettings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.RemoteException;
 import android.os.UserHandle;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -68,8 +66,6 @@ public class Utils {
             fos.write(value.getBytes());
             fos.flush();
             fos.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,7 +76,7 @@ public class Utils {
             return null;
         }
         BufferedReader br = null;
-        String line = null;
+        String line;
         try {
             br = new BufferedReader(new FileReader(filename), 1024);
             line = br.readLine();

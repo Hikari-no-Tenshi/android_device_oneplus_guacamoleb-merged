@@ -18,7 +18,6 @@
 */
 package org.lineageos.device.DeviceSettings;
 
-import android.R;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
@@ -27,7 +26,7 @@ public class DeviceSettingsActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(
-            R.id.content,
+            android.R.id.content,
             new DeviceSettingsFragment()
         ).commit();
     }

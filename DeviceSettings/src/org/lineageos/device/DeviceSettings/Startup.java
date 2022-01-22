@@ -23,8 +23,12 @@ import android.content.Context;
 import android.content.Intent;
 
 public class Startup extends BroadcastReceiver {
+    private static final String LOCKED_BOOT_COMPLETED = "android.intent.action.LOCKED_BOOT_COMPLETED";
+
     @Override
-    public void onReceive(final Context context, final Intent bootintent) {
-        Utils.enableService(context);
+    public void onReceive(final Context context, final Intent intent) {
+        if (LOCKED_BOOT_COMPLETED.equals(intent.getAction())) {
+            Utils.enableService(context);
+        }
     }
 }

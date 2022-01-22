@@ -21,7 +21,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.hardware.Sensor;
@@ -67,7 +66,7 @@ public class AutoHighBrightnessModeService extends Service {
         mAutoHBMSensorEnabled = false;
     }
 
-    private SensorEventListener mSensorEventListener = new SensorEventListener() {
+    private final SensorEventListener mSensorEventListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
             if (mAutoHBMSensorEnabled && mIsAutomaticBrightnessEnabled) {
@@ -85,7 +84,7 @@ public class AutoHighBrightnessModeService extends Service {
         }
     };
 
-    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
@@ -136,7 +135,7 @@ public class AutoHighBrightnessModeService extends Service {
         return null;
     }
 
-    private CustomSettingsObserver mCustomSettingsObserver =
+    private final CustomSettingsObserver mCustomSettingsObserver =
             new CustomSettingsObserver(new Handler(Looper.getMainLooper()));
     private class CustomSettingsObserver extends ContentObserver {
 
@@ -145,7 +144,7 @@ public class AutoHighBrightnessModeService extends Service {
         }
 
         void observe() {
-            ContentResolver resolver = getApplicationContext().getContentResolver();
+            ContentResolver resolver = getContentResolver();
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE),
                     false, this, UserHandle.USER_ALL);
@@ -166,14 +165,14 @@ public class AutoHighBrightnessModeService extends Service {
 
     private void updateBrightnessMode() {
         mIsAutomaticBrightnessEnabled = Settings.System.getIntForUser(
-                getApplicationContext().getContentResolver(),
+                getContentResolver(),
                 Settings.System.SCREEN_BRIGHTNESS_MODE,
                 Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL,
                 UserHandle.USER_CURRENT) == 1;
     }
 
     private int getCurrentBrightness() {
-        return Integer.valueOf(Utils.getFileValue(BRIGHTNESS_FILE, "0"));
+        return Integer.parseInt(Utils.getFileValue(BRIGHTNESS_FILE, "0"));
     }
 
     private static float[] getFloatArray(TypedArray array) {

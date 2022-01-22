@@ -21,7 +21,6 @@ package org.lineageos.device.DeviceSettings;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
@@ -32,12 +31,11 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.UEventObserver;
 import android.os.UserHandle;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.SparseIntArray;
-
-import org.lineageos.device.DeviceSettings.Constants;
 
 public class KeyHandler extends Service {
     private static final String TAG = KeyHandler.class.getSimpleName();
@@ -61,21 +59,15 @@ public class KeyHandler extends Service {
     private NotificationManager mNotificationManager;
     private AudioManager mAudioManager;
     private Vibrator mVibrator;
-    private Handler mHandler;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mHandler = new Handler(Looper.getMainLooper());
         mNotificationManager = getSystemService(NotificationManager.class);
         mAudioManager = getSystemService(AudioManager.class);
         mVibrator = getSystemService(Vibrator.class);
-        if (mVibrator == null || !mVibrator.hasVibrator()) {
-            mVibrator = null;
-        }
         alertSliderEventObserver.startObserving("DEVPATH=/devices/platform/soc/soc:tri_state_key");
-
         mCustomSettingsObserver.observe();
         mCustomSettingsObserver.update();
     }
@@ -85,8 +77,8 @@ public class KeyHandler extends Service {
         return null;
     }
 
-    private UEventObserver alertSliderEventObserver = new UEventObserver() {
-        private Object lock = new Object();
+    private final UEventObserver alertSliderEventObserver = new UEventObserver() {
+        private final Object lock = new Object();
 
         @Override
         public void onUEvent(UEventObserver.UEvent event) {
@@ -114,9 +106,8 @@ public class KeyHandler extends Service {
         int mode = Constants.getPreferenceInt(this, Constants.sKeyMap.get(position));
         mAudioManager.setRingerModeInternal(sSupportedSliderRingModes.get(mode));
         mNotificationManager.setZenMode(sSupportedSliderZenModes.get(mode), null, TAG);
-        doHapticFeedback();
 
-        int positionValue = 0;
+        int positionValue;
         int key = sSupportedSliderRingModes.keyAt(
                 sSupportedSliderRingModes.indexOfKey(mode));
             switch (key) {
@@ -139,6 +130,7 @@ public class KeyHandler extends Service {
             }
 
         sendUpdateBroadcast(position, positionValue);
+        doHapticFeedback();
     }
 
     private void sendUpdateBroadcast(int position, int position_value) {
@@ -152,13 +144,14 @@ public class KeyHandler extends Service {
     }
 
     private void doHapticFeedback() {
-        if (mVibrator == null) {
-            return;
+        if (mVibrator != null) {
+            mVibrator.vibrate(VibrationEffect.createOneShot(50,
+                    VibrationEffect.DEFAULT_AMPLITUDE));
         }
-        mVibrator.vibrate(50);
     }
 
-    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private final CustomSettingsObserver mCustomSettingsObserver =
+            new CustomSettingsObserver(new Handler(Looper.getMainLooper()));
     private class CustomSettingsObserver extends ContentObserver {
 
         CustomSettingsObserver(Handler handler) {
@@ -166,7 +159,7 @@ public class KeyHandler extends Service {
         }
 
         void observe() {
-            ContentResolver resolver = getApplicationContext().getContentResolver();
+            ContentResolver resolver = getContentResolver();
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.UI_NIGHT_MODE),
                     false, this, UserHandle.USER_ALL);
@@ -186,15 +179,15 @@ public class KeyHandler extends Service {
     }
 
     private void updateNightMode() {
-        int currentNightMode = getApplicationContext().getResources().getConfiguration().uiMode
+        int currentNightMode = getResources().getConfiguration().uiMode
                 & Configuration.UI_MODE_NIGHT_MASK;
         switch (currentNightMode) {
             case Configuration.UI_MODE_NIGHT_NO:
-                Settings.System.putIntForUser(getApplicationContext().getContentResolver(),
+                Settings.System.putIntForUser(getContentResolver(),
                         Settings.System.OEM_BLACK_MODE, 0, UserHandle.USER_CURRENT);
                 break;
             case Configuration.UI_MODE_NIGHT_YES:
-                Settings.System.putIntForUser(getApplicationContext().getContentResolver(),
+                Settings.System.putIntForUser(getContentResolver(),
                         Settings.System.OEM_BLACK_MODE, 1, UserHandle.USER_CURRENT);
                 break;
         }
