@@ -35,8 +35,6 @@ import static android.provider.SearchIndexablesContract.INDEXABLES_XML_RES_COLUM
 import static android.provider.SearchIndexablesContract.NON_INDEXABLES_KEYS_COLUMNS;
 
 public class ConfigPanelSearchIndexablesProvider extends SearchIndexablesProvider {
-    private static final String TAG = "ConfigPanelSearchIndexablesProvider";
-
     private static final SearchIndexableResource[] INDEXABLE_RES = new SearchIndexableResource[]{
             new SearchIndexableResource(1, R.xml.main,
                     DeviceSettingsActivity.class.getName(),

@@ -84,7 +84,7 @@ public class DeviceSettingsFragment extends PreferenceFragment
         } else if (preference == mHBMAutobrightnessSwitch) {
             Boolean enabled = (Boolean) newValue;
             SharedPreferences.Editor prefChange = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-            prefChange.putBoolean(KEY_HBM_AUTOBRIGHTNESS_SWITCH, enabled).commit();
+            prefChange.putBoolean(KEY_HBM_AUTOBRIGHTNESS_SWITCH, enabled).apply();
             Utils.enableService(getContext());
             return true;
         }

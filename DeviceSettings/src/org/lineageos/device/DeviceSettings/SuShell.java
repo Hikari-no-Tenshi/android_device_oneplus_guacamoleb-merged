@@ -1,20 +1,15 @@
 package org.lineageos.device.DeviceSettings;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SuShell {
-
     private static final String TAG = SuShell.class.getSimpleName();
 
     // WARNING: setting this to true will dump passwords to logcat
@@ -48,22 +43,12 @@ public class SuShell {
         }
     }
 
-    public static ArrayList<String> runWithShell(String... command) {
-        return run("/system/bin/sh", command);
-    }
-
     public static ArrayList<String> runWithSu(String... command) {
         return run("su", command);
     }
 
-    public static ArrayList<String> run(String shell, ArrayList<String> commands) {
-        String[] commandsArray = new String[commands.size()];
-        commands.toArray(commandsArray);
-        return run(shell, commandsArray);
-    }
-
     public static ArrayList<String> run(String shell, String... commands) {
-        ArrayList<String> output = new ArrayList<String>();
+        ArrayList<String> output = new ArrayList<>();
 
         try {
             Process process = Runtime.getRuntime().exec(shell);
@@ -93,72 +78,37 @@ public class SuShell {
 
             process.waitFor();
         } catch (IOException e) {
-            Log.e(TAG, "Error: " + e.getMessage(), e);
+            Log.e(TAG, "IO Error: " + e.getMessage(), e);
             throw new RuntimeException(e);
         } catch (InterruptedException e) {
-            Log.e(TAG, "Error: " + e.getMessage(), e);
+            Log.e(TAG, "Interrupted Error: " + e.getMessage(), e);
             throw new RuntimeException(e);
         }
 
         return output;
     }
 
-    public static String getCommandOutput(String command)
-            throws IOException {
-
-        StringBuilder output = new StringBuilder();
-
-        if (DEBUG) {
-            Log.d(TAG, "Getting output for command: " + command);
-        }
-        Process p = Runtime.getRuntime().exec(command);
-        InputStream is = p.getInputStream();
-        InputStreamReader r = new InputStreamReader(is);
-        BufferedReader in = new BufferedReader(r);
-
-        String line;
-        while ((line = in.readLine()) != null) {
-            output.append(line);
-            output.append("\n");
-        }
-
-        return output.toString();
-    }
-
     public static boolean detectValidSuInPath() {
-        String[] pathToTest = System.getenv("PATH").split(":");
+        String env_path = System.getenv("PATH");
 
-        for (String path : pathToTest) {
-            File su = new File(path + "/su");
-            if (su.exists()) {
-                // should check if it is suid
-                if (DEBUG) {
-                    Log.d(TAG, "Found su at " + su.getAbsolutePath());
+        if (env_path != null) {
+            String[] pathToTest = env_path.split(":");
+
+            for (String path : pathToTest) {
+                File su = new File(path + "/su");
+                if (su.exists()) {
+                    // should check if it is suid
+                    if (DEBUG) {
+                        Log.d(TAG, "Found su at " + su.getAbsolutePath());
+                    }
+
+                    return true;
                 }
-
-                return true;
             }
         }
 
         return false;
     }
 
-    public static boolean findInPath(String cmd) {
-        String[] pathToTest = System.getenv("PATH").split(":");
-
-        for (String path : pathToTest) {
-            File cmdFile = new File(path, cmd);
-            if (cmdFile.exists()) {
-                if (DEBUG) {
-                    Log.d(TAG, "Found " + cmd + " at " + cmdFile.getAbsolutePath());
-                }
-
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static class SuDeniedException extends Exception {};
+    public static class SuDeniedException extends Exception {}
 }

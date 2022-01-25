@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.UserHandle;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -62,7 +61,7 @@ public class Utils {
             return;
         }
         try {
-            FileOutputStream fos = new FileOutputStream(new File(filename));
+            FileOutputStream fos = new FileOutputStream(filename);
             fos.write(value.getBytes());
             fos.flush();
             fos.close();

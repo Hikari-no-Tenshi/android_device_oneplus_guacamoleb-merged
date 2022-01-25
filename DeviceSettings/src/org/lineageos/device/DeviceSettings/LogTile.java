@@ -15,11 +15,9 @@
  */
 package org.lineageos.device.DeviceSettings;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.service.quicksettings.TileService;
@@ -28,11 +26,9 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.lineageos.device.DeviceSettings.R;
+import java.lang.ref.WeakReference;
 
 public class LogTile extends TileService {
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -54,37 +50,33 @@ public class LogTile extends TileService {
     }
 
     public Dialog logDialog() {
-        CharSequence options[] = new CharSequence[]{
-                "Logcat", "LogcatRadio", "Dmesg"};
+        CharSequence[] options = new CharSequence[] {
+                "Logcat", "LogcatRadio", "Dmesg" };
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
                 new ContextThemeWrapper(this, R.style.AlertDialogTheme));
         alertDialog.setTitle(R.string.quick_settings_log_tile_dialog_title);
-        alertDialog.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (SuShell.detectValidSuInPath()) {
-                    switch (which) {
-                        case 0:
-                            new CreateLogTask().execute(true, false, false);
-                            break;
-                        case 1:
-                            new CreateLogTask().execute(false, true, false);
-                            break;
-                        case 2:
-                            new CreateLogTask().execute(false, false, true);
-                            break;
-                    }
-                } else {
-                    Toast.makeText(LogTile.this,
-                            R.string.cannot_get_su, Toast.LENGTH_SHORT).show();
+        alertDialog.setItems(options, (dialog, which) -> {
+            if (SuShell.detectValidSuInPath()) {
+                switch (which) {
+                    case 0:
+                        new CreateLogTask(LogTile.this).execute(true, false, false);
+                        break;
+                    case 1:
+                        new CreateLogTask(LogTile.this).execute(false, true, false);
+                        break;
+                    case 2:
+                        new CreateLogTask(LogTile.this).execute(false, false, true);
+                        break;
                 }
-
+            } else {
+                Toast.makeText(LogTile.this,
+                        R.string.cannot_get_su, Toast.LENGTH_SHORT).show();
             }
         });
         return alertDialog.create();
     }
 
-    public void makeLogcat() throws SuShell.SuDeniedException, IOException {
+    public static void makeLogcat() throws SuShell.SuDeniedException, IOException {
         final String LOGCAT_FILE = new File(Environment
             .getExternalStorageDirectory(), "LogCat.txt").getAbsolutePath();
         String command = "logcat -d";
@@ -92,7 +84,7 @@ public class LogTile extends TileService {
         SuShell.runWithSuCheck(command);
     }
 
-    public void makeLogcatRadio() throws SuShell.SuDeniedException, IOException {
+    public static void makeLogcatRadio() throws SuShell.SuDeniedException, IOException {
         final String LOGCAT_RADIO_FILE = new File(Environment
             .getExternalStorageDirectory(), "LogcatRadio.txt").getAbsolutePath();
         String command = "logcat -d -b radio";
@@ -100,7 +92,7 @@ public class LogTile extends TileService {
         SuShell.runWithSuCheck(command);
     }
 
-    public void makeDmesg() throws SuShell.SuDeniedException, IOException {
+    public static void makeDmesg() throws SuShell.SuDeniedException, IOException {
         final String DMESG_FILE = new File(Environment
             .getExternalStorageDirectory(), "Dmesg.txt").getAbsolutePath();
         String command = "dmesg -T";
@@ -108,9 +100,13 @@ public class LogTile extends TileService {
         SuShell.runWithSuCheck(command);
     }
 
-    private class CreateLogTask extends AsyncTask<Boolean, Void, Void> {
-
+    private static class CreateLogTask extends AsyncTask<Boolean, Void, Void> {
         private Exception mException = null;
+        private final WeakReference<Context> mContext;
+
+        CreateLogTask(Context context) {
+            mContext = new WeakReference<>(context);
+        }
 
         @Override
         protected Void doInBackground(Boolean... params) {
@@ -137,9 +133,8 @@ public class LogTile extends TileService {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if (mException instanceof SuShell.SuDeniedException) {
-                Toast.makeText(LogTile.this, R.string.cannot_get_su,
+                Toast.makeText(mContext.get(), R.string.cannot_get_su,
                         Toast.LENGTH_LONG).show();
-                return;
             }
         }
     }
