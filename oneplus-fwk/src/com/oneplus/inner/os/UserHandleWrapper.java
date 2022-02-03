@@ -6,6 +6,7 @@ public class UserHandleWrapper {
     public static final UserHandle ALL = UserHandle.ALL;
     public static final UserHandle CURRENT = UserHandle.CURRENT;
     public static final boolean MU_ENABLED = true;
+    public static final UserHandle PARALLEL = UserHandle.PARALLEL;
     public static final UserHandle SYSTEM = UserHandle.SYSTEM;
     public static final int USER_ALL = -1;
     public static final int USER_CURRENT = -2;
