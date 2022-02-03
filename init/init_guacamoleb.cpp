@@ -93,16 +93,16 @@ void vendor_load_properties()
         break;
       case 5:
         /* Global / US Unlocked */
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1907");
-        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1907");
-        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1907");
+        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1905");
+        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1905");
+        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1905");
         property_override("ro.rf_version", "TDD_FDD_Am_All");
         break;
       default:
         /* Generic */
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1907");
-        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1907");
-        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1907");
+        property_override_dual("ro.product.model", "ro.product.vendor.model", "GM1905");
+        property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1905");
+        property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1905");
         property_override("ro.rf_version", "TDD_FDD_Am_All");
         break;
     }
