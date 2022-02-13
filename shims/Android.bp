@@ -18,3 +18,22 @@ cc_library {
     srcs: ["libril_shim.cpp"],
     vendor: true
 }
+
+cc_library {
+    name: "libc_shim",
+    srcs: ["libc_shim.cpp"],
+    shared_libs: [
+        "libc",
+    ],
+    cppflags: [
+        "-std=c++14",
+        "-Wall",
+        "-Werror",
+        "-Wno-unused-function",
+    ],
+    include_dirs: [
+        "bionic/libc",
+        "bionic/libc/include",
+        "bionic/libc/bionic",
+    ],
+}

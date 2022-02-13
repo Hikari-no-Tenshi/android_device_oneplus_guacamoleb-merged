@@ -173,6 +173,11 @@ VENDOR_SECURITY_PATCH := 2021-12-01
 # SELinux
 include device/qcom/sepolicy_vndr/SEPolicy.mk
 
+# Shims
+TARGET_LD_SHIM_LIBS := \
+   /system/lib/libc.so|libc_shim.so \
+   /system/lib64/libc.so|libc_shim.so
+
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/public
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
