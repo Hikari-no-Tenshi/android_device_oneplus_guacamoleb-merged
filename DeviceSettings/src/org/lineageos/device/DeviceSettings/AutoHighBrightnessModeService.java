@@ -114,7 +114,6 @@ public class AutoHighBrightnessModeService extends Service {
                 getResources().obtainTypedArray(R.array.config_HBMautoBrightnessLevels));
         mHBMLuxToBacklightSpline = Spline.createSpline(hbm_lux, hbm_brightness);
         mCustomSettingsObserver.observe();
-        mCustomSettingsObserver.update();
         activateLightSensorRead();
     }
 
@@ -128,6 +127,7 @@ public class AutoHighBrightnessModeService extends Service {
         super.onDestroy();
         unregisterReceiver(mScreenStateReceiver);
         deactivateLightSensorRead();
+        mCustomSettingsObserver.unobserve();
     }
 
     @Override
@@ -148,13 +148,18 @@ public class AutoHighBrightnessModeService extends Service {
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE),
                     false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            getContentResolver().unregisterContentObserver(this);
         }
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SCREEN_BRIGHTNESS_MODE))) {
-                updateBrightnessMode();
+                update();
             }
         }
 
