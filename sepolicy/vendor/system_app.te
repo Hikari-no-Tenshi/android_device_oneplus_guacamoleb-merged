@@ -5,3 +5,5 @@ allow system_app sysfs_oem:file { read write getattr open };
 allow system_app vendor_sysfs_graphics:dir search;
 allow system_app vendor_sysfs_graphics:file r_file_perms;
 binder_call(system_app, hal_cameraHIDL_default)
+binder_call(system_app, hal_power_default)
+binder_call(system_app, hal_vibrator_default)
