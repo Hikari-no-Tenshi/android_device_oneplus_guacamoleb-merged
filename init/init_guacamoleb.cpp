@@ -102,7 +102,6 @@ void vendor_load_properties()
         property_override_dual("ro.system.build.type", "ro.system_ext.build.type", "user");
     }
     property_override("ro.boot.verifiedbootstate", "green");
-    property_override("ro.build.flavor", "OnePlus7-user");
 
     int prj_version = stoi(android::base::GetProperty("ro.boot.prj_version", ""));
     int rf_version = stoi(android::base::GetProperty("ro.boot.rf_version", ""));
