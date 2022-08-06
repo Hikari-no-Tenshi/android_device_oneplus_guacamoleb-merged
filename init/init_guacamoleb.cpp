@@ -100,8 +100,16 @@ void vendor_load_properties()
         property_override_dual("ro.build.type", "ro.vendor.build.type", "user");
         property_override_dual("ro.odm.build.type", "ro.product.build.type", "user");
         property_override_dual("ro.system.build.type", "ro.system_ext.build.type", "user");
+        property_override_dual("ro.build.tags", "ro.vendor.build.tags", "release-keys");
+        property_override_dual("ro.odm.build.tags", "ro.product.build.tags", "release-keys");
+        property_override_dual("ro.system.build.tags", "ro.system_ext.build.tags", "release-keys");
     }
-    property_override("ro.boot.verifiedbootstate", "green");
+
+    property_override_dual("ro.boot.vbmeta.device_state", "vendor.boot.vbmeta.device_state", "locked");
+    property_override_dual("ro.boot.verifiedbootstate", "vendor.boot.verifiedbootstate", "green");
+    property_override("ro.build.description", "OnePlus7-user 11   release-keys");
+    property_override("ro.build.keys", "release-keys");
+    property_override("ro.is_ever_orange", "0");
 
     int prj_version = stoi(android::base::GetProperty("ro.boot.prj_version", ""));
     int rf_version = stoi(android::base::GetProperty("ro.boot.rf_version", ""));
@@ -112,6 +120,8 @@ void vendor_load_properties()
         property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1900");
         property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1900");
         property_override("ro.rf_version", "TDD_FDD_Ch_All");
+        property_override("ro.build.display.id", "GM1900_14_220617");
+        property_override("ro.build.id.hardware", "GM1900_14_");
         break;
       case 3:
         /* India*/
@@ -119,6 +129,8 @@ void vendor_load_properties()
         property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1901");
         property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1901");
         property_override("ro.rf_version", "TDD_FDD_In_All");
+        property_override("ro.build.display.id", "GM1901_14_220617");
+        property_override("ro.build.id.hardware", "GM1901_14_");
         break;
       case 4:
         /* Europe */
@@ -126,6 +138,8 @@ void vendor_load_properties()
         property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1903");
         property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1903");
         property_override("ro.rf_version", "TDD_FDD_Eu_All");
+        property_override("ro.build.display.id", "GM1903_14_220617");
+        property_override("ro.build.id.hardware", "GM1903_14_");
         break;
       case 5:
         /* Global / US Unlocked */
@@ -133,6 +147,8 @@ void vendor_load_properties()
         property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1905");
         property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1905");
         property_override("ro.rf_version", "TDD_FDD_Am_All");
+        property_override("ro.build.display.id", "GM1905_14_220617");
+        property_override("ro.build.id.hardware", "GM1905_14_");
         break;
       default:
         /* Generic */
@@ -140,6 +156,8 @@ void vendor_load_properties()
         property_override_dual("ro.product.product.model", "ro.product.system_ext.model", "GM1905");
         property_override_dual("ro.product.system.model", "ro.product.odm.model", "GM1905");
         property_override("ro.rf_version", "TDD_FDD_Am_All");
+        property_override("ro.build.display.id", "GM1905_14_220617");
+        property_override("ro.build.id.hardware", "GM1905_14_");
         break;
     }
 
@@ -149,9 +167,10 @@ void vendor_load_properties()
     std::string serialno = android::base::GetProperty("ro.serialno", "");
     property_override("ro.vendor.serialno", serialno.c_str());
 
-    property_override("ro.build.product", "OnePlus7");
+    // From oem_build.prop
     property_override("ro.build.real_device", "true");
     property_override("ro.build.release_type", "release");
+    property_override("ro.display.series", "OnePlus 7");
 
     // dalvikvm props
     load_dalvikvm_properties();

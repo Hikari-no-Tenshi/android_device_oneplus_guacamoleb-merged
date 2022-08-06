@@ -80,6 +80,8 @@ ro.netflix.bsp_rev=Q855-16947-1
 ro.nfc.port=I2C
 
 # OnePlus
+ro.build.representative.fingerprint=OnePlus/OnePlus7/OnePlus7:11/RKQ1.201022.002/2205261816:user/release-keys
+ro.build.version.base_os=OnePlus/OnePlus7/OnePlus7:11/RKQ1.201022.002/2205261816:user/release-keys
 ro.vendor.product.manufacturer.db=OP_PHONE
 ro.vendor.product.device.db=OP_DEVICE
 
