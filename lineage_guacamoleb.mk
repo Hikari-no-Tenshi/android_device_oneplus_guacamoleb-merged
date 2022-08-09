@@ -41,3 +41,7 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 PLATFORM_SECURITY_PATCH_OVERRIDE := 2022-06-01
 
 PRODUCT_GMS_CLIENTID_BASE := android-oneplus
+
+# Spoof fingerprint
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.build.spoof_fingerprint=google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys
