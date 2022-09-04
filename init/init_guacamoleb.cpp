@@ -111,8 +111,11 @@ void vendor_load_properties()
     property_override("ro.build.keys", "release-keys");
     property_override("ro.is_ever_orange", "0");
 
-    int prj_version = stoi(android::base::GetProperty("ro.boot.prj_version", ""));
-    int rf_version = stoi(android::base::GetProperty("ro.boot.rf_version", ""));
+    std::string project_name = GetProperty("ro.boot.project_name", "");
+    property_override("vendor.boot.project_name", project_name.c_str());
+
+    int prj_version = stoi(GetProperty("ro.boot.prj_version", ""));
+    int rf_version = stoi(GetProperty("ro.boot.rf_version", ""));
     switch (rf_version){
       case 1:
         /* China*/
@@ -164,7 +167,7 @@ void vendor_load_properties()
     property_override("vendor.boot.prj_version", std::to_string(prj_version).c_str());
     property_override_dual("vendor.rf.version", "vendor.boot.rf_version", std::to_string(rf_version).c_str());
 
-    std::string serialno = android::base::GetProperty("ro.serialno", "");
+    std::string serialno = GetProperty("ro.serialno", "");
     property_override("ro.vendor.serialno", serialno.c_str());
 
     // From oem_build.prop
