@@ -51,7 +51,11 @@ TARGET_KERNEL_ADDITIONAL_FLAGS := HOSTCFLAGS="-fuse-ld=lld -Wno-unused-command-l
 TARGET_KERNEL_BUILD_HOST := build-machine
 TARGET_KERNEL_BUILD_USER := "Hikari no Tenshi"
 TARGET_KERNEL_CLANG_COMPILE := true
+ifeq ($(WITH_KERNELSU),true)
+TARGET_KERNEL_CONFIG := vendor/sm8150ksu-perf_defconfig
+else
 TARGET_KERNEL_CONFIG := vendor/sm8150-perf_defconfig
+endif
 TARGET_KERNEL_SOURCE := kernel/oneplus/sm8150
 
 # Platform
