@@ -182,6 +182,7 @@ persist.vendor.radio.uicc_se_enabled=false
 sys.vendor.shutdown.waittime=500
 
 # Time
+persist.log.tag.DrmLibTime=E
 persist.log.tag.QC-time-services=E
 
 # USB
