@@ -58,7 +58,6 @@ persist.vendor.qcom.bluetooth.twsp_state.enabled=false
 ro.bluetooth.a2dp_offload.supported=true
 
 # Camera
-persist.vendor.camera.logInfoMask=false
 ro.vendor.camera.res.fmq.size=1048576
 
 # Crypto

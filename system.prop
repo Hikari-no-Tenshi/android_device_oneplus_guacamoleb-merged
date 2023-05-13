@@ -33,6 +33,7 @@ persist.debug.coresight.config=stm-events
 persist.vendor.dpm.feature=9
 
 # GPS
+persist.backup.ntpServer="0.pool.ntp.org"
 persist.vendor.overlay.izat.optin=rro
 
 # Graphics
