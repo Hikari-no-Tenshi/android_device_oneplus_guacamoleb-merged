@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="config_spoofBuildGms" translatable="false">
+        <item>PropValue;DEVICE;sailfish</item>
+        <item>PropValue;FINGERPRINT;google/sailfish/sailfish:7.1.2/NZH54D/4146044:user/release-keys</item>
+        <item>PropValue;MODEL;Pixel</item>
+        <item>PropValue;BRAND;google</item>
+        <item>PropValue;MANUFACTURER;Google</item>
+        <item>PropValue;PRODUCT;sailfish</item>
+        <item>VersionField;FIRST_SDK_INT;25</item>
+        <item>VersionFieldString;SECURITY_PATCH;2017-08-05</item>
+    </string-array>
+</resources>

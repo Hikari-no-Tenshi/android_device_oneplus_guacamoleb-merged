@@ -277,6 +277,9 @@ EXTRA_FOD_ANIMATIONS := true
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/play_store_fsi_cert.der:$(TARGET_COPY_OUT_PRODUCT)/etc/security/fsverity/play_store_fsi_cert.der
 
+PRODUCT_PACKAGES += \
+    GMSSpoof
+
 # GPS
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \

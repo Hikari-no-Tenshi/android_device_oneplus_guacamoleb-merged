@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.system.gms_spoof.overlay">
+    <application android:hasCode="false" />
+    <overlay
+      android:targetPackage="android"
+      android:isStatic="true"
+      android:priority="9999"/>
+</manifest>
