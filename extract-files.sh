@@ -98,6 +98,9 @@ for mode_node in modes.findall('Mode'):
 tree.write(sys.argv[1], encoding='utf-8', xml_declaration=True)
 EOF
             ;;
+        odm/etc/dolby/dax-default.xml)
+            sed -i "/volume-leveler-enable/ s/true/false/g" "${2}"
+            ;;
     esac
 }
 
