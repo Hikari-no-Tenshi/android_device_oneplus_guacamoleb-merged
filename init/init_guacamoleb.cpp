@@ -126,8 +126,6 @@ void vendor_load_properties()
         set_ro_build_prop("tags", "release-keys");
     }
 
-    property_override_dual("ro.boot.vbmeta.device_state", "vendor.boot.vbmeta.device_state", "locked");
-    property_override_dual("ro.boot.verifiedbootstate", "vendor.boot.verifiedbootstate", "green");
     property_override("ro.build.description", "OnePlus7-user 11   release-keys");
     property_override("ro.build.keys", "release-keys");
     property_override("ro.is_ever_orange", "0");
